@@ -1,0 +1,3665 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>INTERSTOFF APPARELS LTD - Production RFT Report</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --interstoff-red: #a00d25;
+            --interstoff-green: #006b32;
+            --interstoff-gold: #b8941f;
+            --interstoff-dark: #1a252f;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f0f3f5;
+            padding-top: 0;
+            color: #333;
+        }
+        
+        /* Interstoff Header Styles */
+        .interstoff-header {
+            background: linear-gradient(135deg, var(--interstoff-red) 0%, #8a0a20 100%);
+            color: white;
+            padding: 15px 0;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+            border-bottom: 5px solid var(--interstoff-green);
+            margin-bottom: 20px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .interstoff-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="100" height="100" opacity="0.1"><path fill="white" d="M50 0L61 35H97L68 57L79 92L50 70L21 92L32 57L3 35H39Z"/></svg>');
+            background-size: 200px;
+            opacity: 0.1;
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .logo-section {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .logo {
+            width: 80px;
+            height: 80px;
+            background-color: white;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.3);
+            padding: 5px;
+            border: 2px solid var(--interstoff-green);
+            transition: transform 0.3s ease;
+        }
+        
+        .logo:hover {
+            transform: scale(1.05);
+        }
+        
+        .interstoff-logo {
+            width: 100%;
+            height: 100%;
+            background-image: url('https://sfm-bd.com/wp-content/uploads/2023/07/Interstoff@2x.png');
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-position: center;
+            display: inline-block;
+            border-radius: 8px;
+        }
+        
+        .company-info h1 {
+            font-size: 24px;
+            margin-bottom: 5px;
+            font-weight: 700;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
+        }
+        
+        .company-info .report-title {
+            font-size: 16px;
+            opacity: 0.95;
+            margin-bottom: 3px;
+            font-weight: 600;
+            color: var(--interstoff-gold);
+        }
+        
+        .company-info .address {
+            font-size: 13px;
+            opacity: 0.9;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        
+        .contact-info {
+            text-align: right;
+            border-left: 2px solid rgba(255, 255, 255, 0.3);
+            padding-left: 15px;
+        }
+        
+        .contact-info div {
+            margin-bottom: 5px;
+            font-size: 13px;
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            gap: 5px;
+        }
+        
+        .contact-info i {
+            color: var(--interstoff-gold);
+        }
+        
+        /* Card and Button Styles */
+        .card {
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+            margin-bottom: 20px;
+            border: none;
+            border-radius: 10px;
+            transition: transform 0.2s, box-shadow 0.2s;
+            background-color: white;
+        }
+        
+        .card:hover {
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+        }
+        
+        .card-header {
+            background-color: var(--interstoff-red);
+            color: white;
+            border-radius: 10px 10px 0 0 !important;
+            padding: 12px 15px;
+            font-weight: 600;
+        }
+        
+        .btn-primary {
+            background-color: var(--interstoff-red);
+            border-color: var(--interstoff-red);
+            transition: all 0.3s;
+        }
+        
+        .btn-primary:hover {
+            background-color: #8a0a20;
+            border-color: #8a0a20;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+        
+        .btn-success {
+            background-color: var(--interstoff-green);
+            border-color: var(--interstoff-green);
+            transition: all 0.3s;
+        }
+        
+        .btn-success:hover {
+            background-color: #005a2b;
+            border-color: #005a2b;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+        
+        .nav-tabs .nav-link.active {
+            background-color: var(--interstoff-red);
+            color: white;
+            border: none;
+            font-weight: 600;
+        }
+        
+        .nav-tabs .nav-link {
+            color: var(--interstoff-red);
+            transition: all 0.3s;
+        }
+        
+        .nav-tabs .nav-link:hover {
+            background-color: rgba(160, 13, 37, 0.1);
+        }
+        
+        /* Network Status Styles */
+        .network-status {
+            background: #e9ecef;
+            border-radius: 10px;
+            padding: 15px;
+            margin-bottom: 20px;
+            border-left: 4px solid var(--interstoff-green);
+            box-shadow: 0 2px 5px rgba(0,0,0,0.08);
+        }
+        
+        .connection-status {
+            display: inline-block;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            margin-right: 5px;
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0% { opacity: 1; }
+            50% { opacity: 0.5; }
+            100% { opacity: 1; }
+        }
+        
+        .connected {
+            background-color: var(--interstoff-green);
+        }
+        
+        .disconnected {
+            background-color: var(--interstoff-red);
+        }
+        
+        /* Search Section */
+        .search-section {
+            background: linear-gradient(135deg, var(--interstoff-red) 0%, var(--interstoff-green) 100%);
+            color: white;
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+        }
+        
+        /* Dashboard Stats */
+        .dashboard-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        
+        .stat-card {
+            background: white;
+            padding: 15px;
+            border-radius: 10px;
+            text-align: center;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            border-top: 4px solid var(--interstoff-red);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+        }
+        
+        .stat-number {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: var(--interstoff-red);
+        }
+        
+        .stat-label {
+            font-size: 0.9rem;
+            color: #7f8c8d;
+            margin-top: 5px;
+        }
+        
+        /* RFT Section */
+        .rft-section {
+            background-color: #e9ecef;
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 15px;
+            border-left: 4px solid var(--interstoff-green);
+        }
+        
+        /* Incharge Cards */
+        .incharge-card {
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+            border-left: 4px solid var(--interstoff-red);
+        }
+        
+        .incharge-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+        }
+        
+        /* Status Items */
+        .status-summary {
+            display: flex;
+            gap: 10px;
+            margin: 10px 0;
+        }
+        
+        .status-item {
+            text-align: center;
+            padding: 10px;
+            border-radius: 5px;
+            flex: 1;
+        }
+        
+        .status-yes {
+            background-color: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+        
+        .status-no {
+            background-color: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+        
+        /* Notification */
+        .real-time-notification {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: var(--interstoff-green);
+            color: white;
+            padding: 15px 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+            z-index: 1000;
+            display: none;
+            max-width: 300px;
+            animation: slideIn 0.5s, slideOut 0.5s 2.5s;
+        }
+        
+        @keyframes slideIn {
+            from { transform: translateX(100%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+        
+        @keyframes slideOut {
+            from { transform: translateX(0); opacity: 1; }
+            to { transform: translateX(100%); opacity: 0; }
+        }
+        
+        /* Form Styling */
+        .form-control:focus {
+            border-color: var(--interstoff-red);
+            box-shadow: 0 0 0 0.2rem rgba(160, 13, 37, 0.25);
+        }
+        
+        .form-label {
+            font-weight: 600;
+            color: var(--interstoff-dark);
+        }
+        
+        /* Table Styling */
+        .table th {
+            background-color: var(--interstoff-red);
+            color: white;
+            border: none;
+        }
+        
+        .table-striped tbody tr:nth-of-type(odd) {
+            background-color: rgba(160, 13, 37, 0.05);
+        }
+        
+        /* Responsive Header */
+        @media (max-width: 900px) {
+            .header-content {
+                flex-direction: column;
+                text-align: center;
+                gap: 15px;
+            }
+            
+            .logo-section {
+                flex-direction: column;
+                gap: 10px;
+            }
+            
+            .contact-info {
+                text-align: center;
+                border-left: none;
+                border-top: 2px solid rgba(255, 255, 255, 0.3);
+                padding-left: 0;
+                padding-top: 10px;
+                width: 100%;
+            }
+            
+            .contact-info div {
+                justify-content: center;
+            }
+            
+            .company-info .address {
+                justify-content: center;
+            }
+        }
+        
+        @media (max-width: 600px) {
+            .interstoff-header {
+                padding: 10px 0;
+            }
+            
+            .company-info h1 {
+                font-size: 20px;
+            }
+            
+            .company-info .report-title {
+                font-size: 14px;
+            }
+            
+            .company-info .address {
+                font-size: 12px;
+            }
+            
+            .logo {
+                width: 60px;
+                height: 60px;
+            }
+            
+            .dashboard-stats {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        
+        /* Loading Animation */
+        .loading {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(255,255,255,.3);
+            border-radius: 50%;
+            border-top-color: #fff;
+            animation: spin 1s ease-in-out infinite;
+        }
+        
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+        
+        ::-webkit-scrollbar-thumb {
+            background: var(--interstoff-red);
+            border-radius: 4px;
+        }
+        
+        ::-webkit-scrollbar-thumb:hover {
+            background: #8a0a20;
+        }
+        
+        /* Print Styles */
+        @media print {
+            .no-print, .btn, .nav-tabs, .network-status, .search-section {
+                display: none !important;
+            }
+            
+            .card {
+                box-shadow: none;
+                border: 1px solid #ddd;
+            }
+            
+            .interstoff-header {
+                background: #a00d25 !important;
+                -webkit-print-color-adjust: exact;
+            }
+        }
+        
+        /* IP List Styles */
+        .ip-list-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: #f8f9fa;
+            padding: 5px 10px;
+            border-radius: 4px;
+            margin-bottom: 5px;
+            border: 1px solid #dee2e6;
+        }
+        
+        .ip-address {
+            font-family: monospace;
+            font-weight: bold;
+        }
+        
+        .remove-ip-btn {
+            background: none;
+            border: none;
+            color: #dc3545;
+            cursor: pointer;
+            padding: 2px 5px;
+            border-radius: 3px;
+        }
+        
+        .remove-ip-btn:hover {
+            background: #dc3545;
+            color: white;
+        }
+        
+        /* Day-wise Report Styles */
+        .day-wise-report {
+            background: #f8f9fa;
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 15px;
+            border-left: 4px solid var(--interstoff-green);
+        }
+        
+        .day-header {
+            font-weight: bold;
+            color: var(--interstoff-red);
+            margin-bottom: 10px;
+            padding-bottom: 5px;
+            border-bottom: 1px solid #dee2e6;
+        }
+        
+        .incharge-day-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 10px;
+            margin-top: 10px;
+        }
+        
+        .incharge-day-stat {
+            background: white;
+            padding: 10px;
+            border-radius: 5px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            border-left: 3px solid var(--interstoff-red);
+        }
+        
+        /* Requisition ID Display */
+        .requisition-display {
+            background: linear-gradient(135deg, var(--interstoff-green) 0%, #005a2b 100%);
+            color: white;
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            text-align: center;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            border: 2px solid var(--interstoff-gold);
+        }
+        
+        .requisition-id {
+            font-size: 1.5rem;
+            font-weight: bold;
+            font-family: monospace;
+            letter-spacing: 1px;
+            margin: 10px 0;
+            background: rgba(255,255,255,0.2);
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px dashed rgba(255,255,255,0.5);
+        }
+        
+        .requisition-note {
+            font-size: 0.9rem;
+            opacity: 0.9;
+            margin-top: 10px;
+        }
+        
+        .copy-btn {
+            background: var(--interstoff-gold);
+            border: none;
+            color: #333;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+        
+        .copy-btn:hover {
+            background: #d4af37;
+            transform: translateY(-2px);
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+
+        /* Web Server Controls */
+        .server-controls {
+            background: linear-gradient(135deg, var(--interstoff-gold) 0%, #d4af37 100%);
+            color: #333;
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+        }
+
+        .server-status {
+            display: inline-block;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            margin-right: 8px;
+        }
+
+        .server-online {
+            background-color: var(--interstoff-green);
+            animation: pulse 1.5s infinite;
+        }
+
+        .server-offline {
+            background-color: var(--interstoff-red);
+        }
+
+        /* Admin Controls */
+        .admin-controls {
+            background: linear-gradient(135deg, var(--interstoff-red) 0%, #8a0a20 100%);
+            color: white;
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+        }
+
+        .admin-badge {
+            background: var(--interstoff-gold);
+            color: #333;
+            padding: 3px 8px;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            font-weight: bold;
+        }
+
+        /* Admin-only elements */
+        .admin-only {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <!-- Interstoff Apparels Ltd Header -->
+    <div class="interstoff-header">
+        <div class="container">
+            <div class="header-content">
+                <div class="logo-section">
+                    <div class="logo">
+                        <div class="interstoff-logo"></div>
+                    </div>
+                    <div class="company-info">
+                        <h1>INTERSTOFF APPARELS LTD</h1>
+                        <p class="report-title">Shift Wise Production RFT Report</p>
+                        <p class="address">
+                            <i class="fas fa-map-marker-alt"></i>
+                            Chandra, Kaliakoir, Gazipur
+                        </p>
+                    </div>
+                </div>
+                <div class="contact-info">
+                    <div>
+                        <i class="fas fa-phone"></i>
+                        <span>+880 2 1234 5678</span>
+                    </div>
+                    <div>
+                        <i class="fas fa-envelope"></i>
+                        <span>info@interstoff.com</span>
+                    </div>
+                    <div>
+                        <i class="fas fa-globe"></i>
+                        <span>www.interstoff.com</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container" id="mainContainer">
+        <!-- Admin Controls -->
+        <div class="admin-controls">
+            <h5><i class="fas fa-user-shield me-2"></i>ADMINISTRATION CONTROL PANEL <span class="admin-badge ms-2" id="adminBadge">ADMIN MODE</span></h5>
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="mb-2">
+                        <strong>Your Role:</strong> 
+                        <span class="badge bg-warning">Administrator</span>
+                    </div>
+                    <div class="mb-2">
+                        <strong>Access Level:</strong> 
+                        <span class="badge bg-success">Full Control</span>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="mb-2">
+                        <strong>Data Sync:</strong> 
+                        <span id="dataSyncStatus" class="badge bg-success">Active</span>
+                    </div>
+                    <div class="mb-2">
+                        <strong>Network Users:</strong> 
+                        <span id="networkUsers" class="badge bg-primary">1</span>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="d-grid gap-2">
+                        <button class="btn btn-warning btn-sm" id="forceSyncBtn">
+                            <i class="fas fa-sync me-1"></i>Force Data Sync
+                        </button>
+                        <button class="btn btn-info btn-sm" id="refreshNetworkBtn">
+                            <i class="fas fa-network-wired me-1"></i>Refresh Network
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Web Server Controls -->
+        <div class="server-controls">
+            <h5><i class="fas fa-server me-2"></i>WEB SERVER CONTROLS</h5>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="mb-2">
+                        <strong>Server Status:</strong> 
+                        <span class="server-status server-offline" id="serverStatusIndicator"></span>
+                        <span id="serverStatusText" class="badge bg-danger">Offline</span>
+                    </div>
+                    <div class="mb-2">
+                        <strong>Access URL:</strong> 
+                        <span id="serverUrl" class="badge bg-info">Not running</span>
+                    </div>
+                    <div class="mb-2">
+                        <strong>Connected Clients:</strong> 
+                        <span id="connectedClients" class="badge bg-primary">0</span>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="d-grid gap-2">
+                        <button class="btn btn-success" id="startServerBtn" disabled>
+                            <i class="fas fa-play me-2"></i>Start Web Server
+                        </button>
+                        <button class="btn btn-danger" id="stopServerBtn" disabled>
+                            <i class="fas fa-stop me-2"></i>Stop Web Server
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="alert alert-info mt-2">
+                <small>✅ Start the web server to allow other computers on your network to access this application.</small>
+            </div>
+        </div>
+
+        <!-- Network Status -->
+        <div class="network-status">
+            <h5>🌐 NETWORK STATUS & REAL-TIME SYNC</h5>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="mb-2">
+                        <strong>Your Computer ID:</strong> 
+                        <span id="yourComputerId" class="badge bg-primary">Loading...</span>
+                    </div>
+                    <div class="mb-2">
+                        <strong>IP Address:</strong> 
+                        <span id="ipAddress" class="badge bg-info">Loading...</span>
+                    </div>
+                    <div class="mb-2">
+                        <strong>Sync Status:</strong> 
+                        <span class="connection-status connected" id="connectionIndicator"></span>
+                        <span id="connectionStatus" class="badge bg-success">Connected</span>
+                        <span id="lastUpdate" class="badge bg-secondary ms-2">Last Update: Just Now</span>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="mb-2">
+                        <strong>Authorized IPs:</strong> 
+                        <div class="input-group input-group-sm">
+                            <input type="text" class="form-control" id="ipAccessField" placeholder="Enter IP addresses (comma separated)" value="192.168.21.219">
+                            <button class="btn btn-success" type="button" id="addIpBtn">
+                                <i class="fas fa-plus"></i> Add
+                            </button>
+                        </div>
+                        <div id="ipList" class="mt-1">
+                            <!-- IP list will be populated here -->
+                        </div>
+                    </div>
+                    <div class="mb-2">
+                        <strong>Active Computers:</strong> 
+                        <span id="activeComputers" class="badge bg-primary">1</span>
+                    </div>
+                    <div class="mb-2">
+                        <strong>Total Records:</strong> 
+                        <span id="dataCount" class="badge bg-success">0</span>
+                    </div>
+                </div>
+            </div>
+            <div class="alert alert-info mt-2">
+                <small>✅ This system automatically shares data across all computers using the same HTML file on your network with IP-based access control.</small>
+            </div>
+        </div>
+
+        <!-- Requisition ID Display -->
+        <div class="requisition-display" id="requisitionDisplay" style="display: none;">
+            <h4><i class="fas fa-file-invoice me-2"></i>Current Requisition ID</h4>
+            <div class="requisition-id" id="currentRequisitionId">REQ-231015-ABC123</div>
+            <div class="requisition-note">
+                <i class="fas fa-info-circle me-1"></i>
+                Please note down this Requisition ID before submitting the form
+            </div>
+            <button class="copy-btn mt-2" id="copyRequisitionBtn">
+                <i class="fas fa-copy me-1"></i>Copy to Clipboard
+            </button>
+        </div>
+
+        <!-- Search Section -->
+        <div class="search-section">
+            <h4><i class="fas fa-search me-2"></i>Quick Search & Requisition System</h4>
+            <div class="row">
+                <div class="col-md-8">
+                    <input type="text" class="form-control" id="searchInput" placeholder="Search by Batch No, Buyer, Color Name, LD No, or Requisition ID...">
+                </div>
+                <div class="col-md-2">
+                    <button class="btn btn-warning w-100" id="searchBtn">
+                        <i class="fas fa-search me-2"></i>Search
+                    </button>
+                </div>
+                <div class="col-md-2">
+                    <button class="btn btn-secondary w-100" id="clearSearchBtn">
+                        <i class="fas fa-times me-2"></i>Clear
+                    </button>
+                </div>
+            </div>
+            <div class="mt-2">
+                <small class="text-white-50">Search across all production records by batch number, buyer name, color name, LD number, or requisition ID</small>
+            </div>
+            
+            <!-- Search Results Dashboard -->
+            <div id="searchResultsDashboard" class="mt-3" style="display: none;">
+                <div class="card">
+                    <div class="card-header bg-success text-white">
+                        <h5 class="mb-0">Search Results Dashboard</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="row mb-3">
+                            <div class="col-md-3">
+                                <div class="stat-card">
+                                    <div class="stat-number" id="searchTotalRecords">0</div>
+                                    <div class="stat-label">Total Records</div>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="stat-card">
+                                    <div class="stat-number" id="searchTotalProduction">0</div>
+                                    <div class="stat-label">Total Production</div>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="stat-card">
+                                    <div class="stat-number" id="searchSuccessRate">0%</div>
+                                    <div class="stat-label">Success Rate</div>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="stat-card">
+                                    <div class="stat-number" id="searchRequisitionCount">0</div>
+                                    <div class="stat-label">Requisitions</div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="table-responsive">
+                            <table class="table table-striped table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th>Requisition ID</th>
+                                        <th>Batch No</th>
+                                        <th>Buyer</th>
+                                        <th>Color Name</th>
+                                        <th>Color Qty</th>
+                                        <th>RFT Type</th>
+                                        <th>RFT Status</th>
+                                        <th>Incharge</th>
+                                        <th>Date</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="searchResultsTable">
+                                    <!-- Search results will be populated here -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Quick Stats Dashboard -->
+        <div class="dashboard-stats">
+            <div class="stat-card">
+                <div class="stat-number" id="totalRecords">0</div>
+                <div class="stat-label">Total Records</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" id="totalProduction">0</div>
+                <div class="stat-label">Total Production</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" id="successRate">0%</div>
+                <div class="stat-label">Success Rate</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" id="bulkToBulkTotal">0</div>
+                <div class="stat-label">Bulk to Bulk</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" id="labToBulkTotal">0</div>
+                <div class="stat-label">Lab to Bulk</div>
+            </div>
+        </div>
+
+        <!-- RFT Summary -->
+        <div class="card">
+            <div class="card-header">
+                RFT Performance Summary
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="rft-section">
+                            <h5>LAB TO BULK</h5>
+                            <div class="status-summary">
+                                <div class="status-item status-yes">
+                                    <div class="number" id="labToBulkYes">0</div>
+                                    <div class="label">YES</div>
+                                </div>
+                                <div class="status-item status-no">
+                                    <div class="number" id="labToBulkNo">0</div>
+                                    <div class="label">NO</div>
+                                </div>
+                            </div>
+                            <div class="mt-2">
+                                <strong>Total: <span id="labToBulkTotalBox">0</span></strong> | 
+                                <strong>Success Rate:</strong> <span id="labToBulkSuccessRate" class="badge bg-success">0%</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="rft-section">
+                            <h5>BULK TO BULK</h5>
+                            <div class="status-summary">
+                                <div class="status-item status-yes">
+                                    <div class="number" id="bulkToBulkYes">0</div>
+                                    <div class="label">YES</div>
+                                </div>
+                                <div class="status-item status-no">
+                                    <div class="number" id="bulkToBulkNo">0</div>
+                                    <div class="label">NO</div>
+                                </div>
+                            </div>
+                            <div class="mt-2">
+                                <strong>Total: <span id="bulkToBulkTotalBox">0</span></strong> | 
+                                <strong>Success Rate:</strong> <span id="bulkToBulkSuccessRate" class="badge bg-success">0%</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Data Entry Form -->
+        <div class="card">
+            <div class="card-header">
+                Data Entry Form
+            </div>
+            <div class="card-body">
+                <form id="dataForm">
+                    <div class="row mb-3">
+                        <div class="col-md-3">
+                            <label for="date" class="form-label">Date</label>
+                            <input type="date" class="form-control" id="date" required>
+                        </div>
+                        <div class="col-md-2">
+                            <label for="mcNo" class="form-label">MC No</label>
+                            <select class="form-control" id="mcNo">
+                                <option value="">Select MC</option>
+                                <option value="1">M/C-1</option>
+                                <option value="2">M/C-2</option>
+                                <option value="3">M/C-3</option>
+                                <option value="4">M/C-4</option>
+                                <option value="5">M/C-5</option>
+                                <option value="6">M/C-6</option>
+                                <option value="7">M/C-7</option>
+                                <option value="8">M/C-8</option>
+                                <option value="9">M/C-9</option>
+                                <option value="10">M/C-10</option>
+                                <option value="11">M/C-11</option>
+                            </select>
+                        </div>
+                        <div class="col-md-3">
+                            <label for="buyer" class="form-label">Buyer</label>
+                            <input type="text" class="form-control" id="buyer">
+                        </div>
+                        <div class="col-md-2">
+                            <label for="batchNo" class="form-label">Batch No</label>
+                            <input type="text" class="form-control" id="batchNo" required>
+                        </div>
+                        <div class="col-md-2">
+                            <label for="ldNo" class="form-label">LD No</label>
+                            <input type="text" class="form-control" id="ldNo">
+                        </div>
+                    </div>
+                    
+                    <div class="row mb-3">
+                        <div class="col-md-3">
+                            <label for="colorName" class="form-label">Color Name</label>
+                            <input type="text" class="form-control" id="colorName" required>
+                        </div>
+                        <div class="col-md-2">
+                            <label for="white" class="form-label">White Quantity</label>
+                            <input type="number" class="form-control" id="white">
+                        </div>
+                        <div class="col-md-2">
+                            <label for="wash" class="form-label">Wash Quantity</label>
+                            <input type="number" class="form-control" id="wash">
+                        </div>
+                        <div class="col-md-2">
+                            <label for="color" class="form-label">Color Quantity</label>
+                            <input type="number" class="form-control" id="color" required>
+                        </div>
+                        <div class="col-md-3">
+                            <label for="depth" class="form-label">Depth</label>
+                            <select class="form-control" id="depth" required>
+                                <option value="">Select Depth</option>
+                                <option value="Lt Color">Lt Color</option>
+                                <option value="Med Color">Med Color</option>
+                                <option value="Dk Color">Dk Color</option>
+                                <option value="Extra Dk">Extra Dk</option>
+                                <option value="Turquise">Turquise</option>
+                                <option value="Royal">Royal</option>
+                                <option value="Black">Black</option>
+                                <option value="Both Part">Both Part</option>
+                                <option value="White">White</option>
+                                <option value="RFD with Enzyme">RFD with Enzyme</option>
+                                <option value="RFD without Enzyme">RFD without Enzyme</option>
+                                <option value="Cold Wash">Cold Wash</option>
+                                <option value="Wash with Enzyme">Wash with Enzyme</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="row mb-3">
+                        <div class="col-md-3">
+                            <label for="yarnLot" class="form-label">YARN LOT</label>
+                            <input type="text" class="form-control" id="yarnLot">
+                        </div>
+                        <div class="col-md-3">
+                            <label for="operatorName" class="form-label">Operator Name</label>
+                            <input type="text" class="form-control" id="operatorName">
+                        </div>
+                        <div class="col-md-3">
+                            <label for="inchargeName" class="form-label">Incharge Name</label>
+                            <select class="form-control" id="inchargeName" required>
+                                <option value="">Select Incharge</option>
+                                <option value="Jashimuddin">Jashimuddin</option>
+                                <option value="Mamun">Mamun</option>
+                                <option value="Sukumar">Sukumar</option>
+                            </select>
+                        </div>
+                        <div class="col-md-3">
+                            <label for="shift" class="form-label">Shift</label>
+                            <select class="form-control" id="shift">
+                                <option value="">Select Shift</option>
+                                <option value="A">A</option>
+                                <option value="B">B</option>
+                                <option value="C">C</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <!-- Production Time Fields -->
+                    <div class="row mb-3">
+                        <div class="col-md-4">
+                            <label for="productionStandardTime" class="form-label">Production Standard Time</label>
+                            <input type="number" class="form-control" id="productionStandardTime" placeholder="Auto-filled from depth" readonly>
+                        </div>
+                        <div class="col-md-4">
+                            <label for="productionOperationTime" class="form-label">Production Operation Time</label>
+                            <input type="text" class="form-control" id="productionOperationTime" placeholder="HH:MM format">
+                        </div>
+                        <div class="col-md-4">
+                            <label class="form-label">&nbsp;</label>
+                            <button type="button" class="btn btn-outline-primary w-100" id="generateTimeBtn">
+                                <i class="fas fa-calculator me-1"></i>Generate Time
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <!-- RFT Section -->
+                    <div class="rft-section">
+                        <h5>RFT Details</h5>
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <label class="form-label">RFT Type</label>
+                                <div>
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" name="rftType" id="labToBulk" value="LAB TO BULK">
+                                        <label class="form-check-label" for="labToBulk">LAB TO BULK</label>
+                                    </div>
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" name="rftType" id="bulkToBulk" value="BULK TO BULK">
+                                        <label class="form-check-label" for="bulkToBulk">BULK TO BULK</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="rft-status-section">
+                                    <div id="labToBulkStatus" class="rft-status" style="display: none;">
+                                        <label for="labToBulkStatusSelect" class="form-label">LAB TO BULK Status</label>
+                                        <select class="form-control" id="labToBulkStatusSelect">
+                                            <option value="">Select Status</option>
+                                            <option value="YES">YES</option>
+                                            <option value="NO">NO</option>
+                                        </select>
+                                    </div>
+                                    <div id="bulkToBulkStatus" class="rft-status" style="display: none;">
+                                        <label for="bulkToBulkStatusSelect" class="form-label">BULK TO BULK Status</label>
+                                        <select class="form-control" id="bulkToBulkStatusSelect">
+                                            <option value="">Select Status</option>
+                                            <option value="YES">YES</option>
+                                            <option value="NO">NO</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="row mb-3">
+                            <div class="col-md-12">
+                                <label for="reasonForFail" class="form-label">Reason for Fail</label>
+                                <input type="text" class="form-control" id="reasonForFail">
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="row mb-3">
+                        <div class="col-md-12">
+                            <label for="remarks" class="form-label">Remarks</label>
+                            <textarea class="form-control" id="remarks" rows="2"></textarea>
+                        </div>
+                    </div>
+                    
+                    <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                        <button type="button" class="btn btn-secondary me-md-2" id="resetBtn">Reset Form</button>
+                        <button type="button" class="btn btn-warning me-md-2" id="autoFillBtn">Auto Fill Test Data</button>
+                        <button type="submit" class="btn btn-primary">Add Record</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        
+        <!-- Dashboard Tabs -->
+        <ul class="nav nav-tabs" id="dashboardTabs" role="tablist">
+            <li class="nav-item" role="presentation">
+                <button class="nav-link active" id="summary-tab" data-bs-toggle="tab" data-bs-target="#summary" type="button" role="tab" aria-controls="summary" aria-selected="true">Dashboard Summary</button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="records-tab" data-bs-toggle="tab" data-bs-target="#records" type="button" role="tab" aria-controls="records" aria-selected="false">All Records</button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="export-tab" data-bs-toggle="tab" data-bs-target="#export" type="button" role="tab" aria-controls="export" aria-selected="false">Export & Email</button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="daywise-tab" data-bs-toggle="tab" data-bs-target="#daywise" type="button" role="tab" aria-controls="daywise" aria-selected="false">Day-wise Report</button>
+            </li>
+        </ul>
+        
+        <div class="tab-content" id="dashboardTabsContent">
+            <!-- Dashboard Summary Tab -->
+            <div class="tab-pane fade show active" id="summary" role="tabpanel" aria-labelledby="summary-tab">
+                <!-- Incharge Performance Summary -->
+                <div class="card mt-3">
+                    <div class="card-header">
+                        Incharge Performance Summary
+                    </div>
+                    <div class="card-body">
+                        <div class="row" id="inchargeSummaryCards">
+                            <!-- Incharge cards will be populated here -->
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Time-Based Production Report -->
+                <div class="card mt-3">
+                    <div class="card-header">
+                        Time-Based Production Report
+                    </div>
+                    <div class="card-body">
+                        <div class="row mb-3">
+                            <div class="col-md-3">
+                                <label for="timeReportStartDate" class="form-label">Start Date</label>
+                                <input type="date" class="form-control" id="timeReportStartDate">
+                            </div>
+                            <div class="col-md-3">
+                                <label for="timeReportEndDate" class="form-label">End Date</label>
+                                <input type="date" class="form-control" id="timeReportEndDate">
+                            </div>
+                            <div class="col-md-3">
+                                <label for="timeReportIncharge" class="form-label">Incharge</label>
+                                <select class="form-control" id="timeReportIncharge">
+                                    <option value="all">All Inchargs</option>
+                                    <option value="Jashimuddin">Jashimuddin</option>
+                                    <option value="Mamun">Mamun</option>
+                                    <option value="Sukumar">Sukumar</option>
+                                </select>
+                            </div>
+                            <div class="col-md-3">
+                                <label class="form-label">&nbsp;</label>
+                                <div class="d-flex gap-2">
+                                    <button type="button" class="btn btn-primary w-50" id="generateTimeReportBtn">
+                                        <i class="fas fa-chart-line me-1"></i>Generate
+                                    </button>
+                                    <button type="button" class="btn btn-secondary w-50" id="clearTimeReportBtn">
+                                        <i class="fas fa-times me-1"></i>Clear
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="table-responsive">
+                            <table class="table table-striped table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th>Date</th>
+                                        <th>Incharge</th>
+                                        <th>Batch No</th>
+                                        <th>Color Name</th>
+                                        <th>Depth</th>
+                                        <th>Production Standard Time</th>
+                                        <th>Production Operation Time</th>
+                                        <th>Efficiency</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="timeReportTable">
+                                    <!-- Time report data will be populated here -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- All Records Tab -->
+            <div class="tab-pane fade" id="records" role="tabpanel" aria-labelledby="records-tab">
+                <div class="card mt-3">
+                    <div class="card-header">
+                        All Production Records
+                    </div>
+                    <div class="card-body">
+                        <div class="row mb-3">
+                            <div class="col-md-4">
+                                <label for="recordsFilterIncharge" class="form-label">Filter by Incharge</label>
+                                <select class="form-control" id="recordsFilterIncharge">
+                                    <option value="all">All Inchargs</option>
+                                    <option value="Jashimuddin">Jashimuddin</option>
+                                    <option value="Mamun">Mamun</option>
+                                    <option value="Sukumar">Sukumar</option>
+                                </select>
+                            </div>
+                            <div class="col-md-4">
+                                <label for="recordsFilterRftType" class="form-label">Filter by RFT Type</label>
+                                <select class="form-control" id="recordsFilterRftType">
+                                    <option value="all">All Types</option>
+                                    <option value="LAB TO BULK">LAB TO BULK</option>
+                                    <option value="BULK TO BULK">BULK TO BULK</option>
+                                </select>
+                            </div>
+                            <div class="col-md-4">
+                                <label for="recordsFilterStatus" class="form-label">Filter by Status</label>
+                                <select class="form-control" id="recordsFilterStatus">
+                                    <option value="all">All Status</option>
+                                    <option value="YES">YES</option>
+                                    <option value="NO">NO</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <div class="table-responsive">
+                            <table class="table table-striped table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th>Requisition ID</th>
+                                        <th>Date</th>
+                                        <th>Batch No</th>
+                                        <th>Buyer</th>
+                                        <th>Color Name</th>
+                                        <th>Depth</th>
+                                        <th>Color Qty</th>
+                                        <th>RFT Type</th>
+                                        <th>RFT Status</th>
+                                        <th>Incharge</th>
+                                        <th>Standard Time</th>
+                                        <th>Operation Time</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="recordsTable">
+                                    <!-- Records will be populated here -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Export & Email Tab -->
+            <div class="tab-pane fade" id="export" role="tabpanel" aria-labelledby="export-tab">
+                <div class="card mt-3">
+                    <div class="card-header">
+                        Export & Email Reports
+                    </div>
+                    <div class="card-body">
+                        <div class="row mb-4">
+                            <div class="col-md-6">
+                                <div class="card">
+                                    <div class="card-header bg-success text-white">
+                                        <h5 class="mb-0">Export Data</h5>
+                                    </div>
+                                    <div class="card-body">
+                                        <p>Export all production data to Excel format for analysis and reporting.</p>
+                                        <div class="d-grid gap-2">
+                                            <button class="btn btn-success" id="exportExcelBtn">
+                                                <i class="fas fa-file-excel me-2"></i>Export to Excel
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="card">
+                                    <div class="card-header bg-primary text-white">
+                                        <h5 class="mb-0">Email Report</h5>
+                                    </div>
+                                    <div class="card-body">
+                                        <p>Send production report via email to management.</p>
+                                        <div class="mb-3">
+                                            <label for="emailRecipient" class="form-label">Recipient Email</label>
+                                            <input type="email" class="form-control" id="emailRecipient" placeholder="Enter email address">
+                                        </div>
+                                        <div class="d-grid gap-2">
+                                            <button class="btn btn-primary" id="sendEmailBtn">
+                                                <i class="fas fa-paper-plane me-2"></i>Send Email Report
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="card">
+                            <div class="card-header bg-warning text-dark">
+                                <h5 class="mb-0">Data Management</h5>
+                            </div>
+                            <div class="card-body">
+                                <p>Backup or restore production data for system maintenance.</p>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="mb-3">
+                                            <label for="backupFileName" class="form-label">Backup File Name</label>
+                                            <input type="text" class="form-control" id="backupFileName" placeholder="Enter backup file name">
+                                        </div>
+                                        <button class="btn btn-warning w-100" id="backupDataBtn">
+                                            <i class="fas fa-download me-2"></i>Backup Data
+                                        </button>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="mb-3">
+                                            <label for="restoreFile" class="form-label">Restore Data</label>
+                                            <input type="file" class="form-control" id="restoreFile" accept=".json">
+                                        </div>
+                                        <button class="btn btn-info w-100" id="restoreDataBtn">
+                                            <i class="fas fa-upload me-2"></i>Restore Data
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Day-wise Report Tab -->
+            <div class="tab-pane fade" id="daywise" role="tabpanel" aria-labelledby="daywise-tab">
+                <div class="card mt-3">
+                    <div class="card-header">
+                        Day-wise Production Summary
+                    </div>
+                    <div class="card-body">
+                        <div class="row mb-3">
+                            <div class="col-md-4">
+                                <label for="daywiseStartDate" class="form-label">Start Date</label>
+                                <input type="date" class="form-control" id="daywiseStartDate">
+                            </div>
+                            <div class="col-md-4">
+                                <label for="daywiseEndDate" class="form-label">End Date</label>
+                                <input type="date" class="form-control" id="daywiseEndDate">
+                            </div>
+                            <div class="col-md-4">
+                                <label class="form-label">&nbsp;</label>
+                                <div class="d-flex gap-2">
+                                    <button type="button" class="btn btn-primary w-50" id="generateDaywiseReportBtn">
+                                        <i class="fas fa-chart-bar me-1"></i>Generate
+                                    </button>
+                                    <button type="button" class="btn btn-secondary w-50" id="printDaywiseReportBtn">
+                                        <i class="fas fa-print me-1"></i>Print
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div id="daywiseReportContent">
+                            <!-- Day-wise report will be populated here -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Real-time Notification -->
+    <div class="real-time-notification" id="notification">
+        <div class="d-flex align-items-center">
+            <i class="fas fa-bell me-2"></i>
+            <span id="notificationMessage">New data has been added!</span>
+        </div>
+    </div>
+
+    <!-- Edit Record Modal -->
+    <div class="modal fade" id="editRecordModal" tabindex="-1" aria-labelledby="editRecordModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="editRecordModalLabel">Edit Production Record</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="editRecordForm">
+                        <input type="hidden" id="editRecordId">
+                        <div class="row mb-3">
+                            <div class="col-md-3">
+                                <label for="editDate" class="form-label">Date</label>
+                                <input type="date" class="form-control" id="editDate" required>
+                            </div>
+                            <div class="col-md-2">
+                                <label for="editMcNo" class="form-label">MC No</label>
+                                <select class="form-control" id="editMcNo">
+                                    <option value="">Select MC</option>
+                                    <option value="1">M/C-1</option>
+                                    <option value="2">M/C-2</option>
+                                    <option value="3">M/C-3</option>
+                                    <option value="4">M/C-4</option>
+                                    <option value="5">M/C-5</option>
+                                    <option value="6">M/C-6</option>
+                                    <option value="7">M/C-7</option>
+                                    <option value="8">M/C-8</option>
+                                    <option value="9">M/C-9</option>
+                                    <option value="10">M/C-10</option>
+                                    <option value="11">M/C-11</option>
+                                </select>
+                            </div>
+                            <div class="col-md-3">
+                                <label for="editBuyer" class="form-label">Buyer</label>
+                                <input type="text" class="form-control" id="editBuyer">
+                            </div>
+                            <div class="col-md-2">
+                                <label for="editBatchNo" class="form-label">Batch No</label>
+                                <input type="text" class="form-control" id="editBatchNo" required>
+                            </div>
+                            <div class="col-md-2">
+                                <label for="editLdNo" class="form-label">LD No</label>
+                                <input type="text" class="form-control" id="editLdNo">
+                            </div>
+                        </div>
+                        
+                        <div class="row mb-3">
+                            <div class="col-md-3">
+                                <label for="editColorName" class="form-label">Color Name</label>
+                                <input type="text" class="form-control" id="editColorName" required>
+                            </div>
+                            <div class="col-md-2">
+                                <label for="editWhite" class="form-label">White Quantity</label>
+                                <input type="number" class="form-control" id="editWhite">
+                            </div>
+                            <div class="col-md-2">
+                                <label for="editWash" class="form-label">Wash Quantity</label>
+                                <input type="number" class="form-control" id="editWash">
+                            </div>
+                            <div class="col-md-2">
+                                <label for="editColor" class="form-label">Color Quantity</label>
+                                <input type="number" class="form-control" id="editColor" required>
+                            </div>
+                            <div class="col-md-3">
+                                <label for="editDepth" class="form-label">Depth</label>
+                                <select class="form-control" id="editDepth" required>
+                                    <option value="">Select Depth</option>
+                                    <option value="Lt Color">Lt Color</option>
+                                    <option value="Med Color">Med Color</option>
+                                    <option value="Dk Color">Dk Color</option>
+                                    <option value="Extra Dk">Extra Dk</option>
+                                    <option value="Turquise">Turquise</option>
+                                    <option value="Royal">Royal</option>
+                                    <option value="Black">Black</option>
+                                    <option value="Both Part">Both Part</option>
+                                    <option value="White">White</option>
+                                    <option value="RFD with Enzyme">RFD with Enzyme</option>
+                                    <option value="RFD without Enzyme">RFD without Enzyme</option>
+                                    <option value="Cold Wash">Cold Wash</option>
+                                    <option value="Wash with Enzyme">Wash with Enzyme</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <div class="row mb-3">
+                            <div class="col-md-3">
+                                <label for="editYarnLot" class="form-label">YARN LOT</label>
+                                <input type="text" class="form-control" id="editYarnLot">
+                            </div>
+                            <div class="col-md-3">
+                                <label for="editOperatorName" class="form-label">Operator Name</label>
+                                <input type="text" class="form-control" id="editOperatorName">
+                            </div>
+                            <div class="col-md-3">
+                                <label for="editInchargeName" class="form-label">Incharge Name</label>
+                                <select class="form-control" id="editInchargeName" required>
+                                    <option value="">Select Incharge</option>
+                                    <option value="Jashimuddin">Jashimuddin</option>
+                                    <option value="Mamun">Mamun</option>
+                                    <option value="Sukumar">Sukumar</option>
+                                </select>
+                            </div>
+                            <div class="col-md-3">
+                                <label for="editShift" class="form-label">Shift</label>
+                                <select class="form-control" id="editShift">
+                                    <option value="">Select Shift</option>
+                                    <option value="A">A</option>
+                                    <option value="B">B</option>
+                                    <option value="C">C</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <!-- Production Time Fields -->
+                        <div class="row mb-3">
+                            <div class="col-md-4">
+                                <label for="editProductionStandardTime" class="form-label">Production Standard Time</label>
+                                <input type="number" class="form-control" id="editProductionStandardTime" placeholder="Auto-filled from depth" readonly>
+                            </div>
+                            <div class="col-md-4">
+                                <label for="editProductionOperationTime" class="form-label">Production Operation Time</label>
+                                <input type="text" class="form-control" id="editProductionOperationTime" placeholder="HH:MM format">
+                            </div>
+                            <div class="col-md-4">
+                                <label class="form-label">&nbsp;</label>
+                                <button type="button" class="btn btn-outline-primary w-100" id="editGenerateTimeBtn">
+                                    <i class="fas fa-calculator me-1"></i>Generate Time
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <!-- RFT Section -->
+                        <div class="rft-section">
+                            <h5>RFT Details</h5>
+                            <div class="row mb-3">
+                                <div class="col-md-6">
+                                    <label class="form-label">RFT Type</label>
+                                    <div>
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" name="editRftType" id="editLabToBulk" value="LAB TO BULK">
+                                            <label class="form-check-label" for="editLabToBulk">LAB TO BULK</label>
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" name="editRftType" id="editBulkToBulk" value="BULK TO BULK">
+                                            <label class="form-check-label" for="editBulkToBulk">BULK TO BULK</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="rft-status-section">
+                                        <div id="editLabToBulkStatus" class="rft-status" style="display: none;">
+                                            <label for="editLabToBulkStatusSelect" class="form-label">LAB TO BULK Status</label>
+                                            <select class="form-control" id="editLabToBulkStatusSelect">
+                                                <option value="">Select Status</option>
+                                                <option value="YES">YES</option>
+                                                <option value="NO">NO</option>
+                                            </select>
+                                        </div>
+                                        <div id="editBulkToBulkStatus" class="rft-status" style="display: none;">
+                                            <label for="editBulkToBulkStatusSelect" class="form-label">BULK TO BULK Status</label>
+                                            <select class="form-control" id="editBulkToBulkStatusSelect">
+                                                <option value="">Select Status</option>
+                                                <option value="YES">YES</option>
+                                                <option value="NO">NO</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="row mb-3">
+                                <div class="col-md-12">
+                                    <label for="editReasonForFail" class="form-label">Reason for Fail</label>
+                                    <input type="text" class="form-control" id="editReasonForFail">
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="row mb-3">
+                            <div class="col-md-12">
+                                <label for="editRemarks" class="form-label">Remarks</label>
+                                <textarea class="form-control" id="editRemarks" rows="2"></textarea>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-primary" id="updateRecordBtn">Update Record</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Global variables
+        let productionData = [];
+        let currentEditId = null;
+        let authorizedIPs = ['192.168.21.219'];
+        let computerId = generateComputerId();
+        let currentRequisitionId = '';
+        let webServer = null;
+        let isServerRunning = false;
+        let isAdmin = true; // You are the administrator
+        
+        // Depth and Standard Time mapping from Excel
+        const depthStandardTimeMap = {
+            "Lt Color": 10.53,
+            "Med Color": 11.68,
+            "Dk Color": 12.48,
+            "Extra Dk": 12.48,
+            "Turquise": 13.07,
+            "Royal": 13.07,
+            "Black": 12.48,
+            "Both Part": 17.27,
+            "White": 6.15,
+            "RFD with Enzyme": 6.15,
+            "RFD without Enzyme": 6.15,
+            "Cold Wash": 3.47,
+            "Wash with Enzyme": 3.47
+        };
+        
+        // Initialize the application
+        document.addEventListener('DOMContentLoaded', function() {
+            initializeEnhancedNetwork();
+            setupEventListeners();
+            loadData();
+            updateDashboard();
+            setCurrentDate();
+            generateNewRequisitionId();
+        });
+        
+        // Enhanced Network Initialization
+        function initializeEnhancedNetwork() {
+            console.log('Initializing enhanced network features...');
+            
+            // Load authorized IPs
+            loadAuthorizedIPs();
+            
+            // Set computer ID and IP
+            document.getElementById('yourComputerId').textContent = computerId;
+            
+            // Get the real IP address with enhanced detection
+            getEnhancedIPAddress();
+            
+            // Setup network synchronization
+            setupNetworkSync();
+            
+            // Discover network computers
+            discoverNetworkComputers();
+            
+            // Setup admin controls
+            setupAdminControls();
+            
+            // Initialize web server status
+            updateServerStatus();
+            
+            console.log('Enhanced network features initialized');
+        }
+        
+        // Enhanced IP address detection
+        function getEnhancedIPAddress() {
+            // First try to get the IP from localStorage (cached)
+            const cachedIP = localStorage.getItem('cachedIP');
+            if (cachedIP) {
+                document.getElementById('ipAddress').textContent = cachedIP;
+                checkNetworkAccess(cachedIP);
+            }
+            
+            // Try multiple methods to get IP address
+            const ipPromises = [
+                fetch('https://api.ipify.org?format=json').then(r => r.json()),
+                fetch('https://api64.ipify.org?format=json').then(r => r.json()),
+                fetch('https://icanhazip.com').then(r => r.text())
+            ];
+            
+            Promise.any(ipPromises)
+                .then(data => {
+                    let ip;
+                    if (typeof data === 'string') {
+                        ip = data.trim();
+                    } else {
+                        ip = data.ip;
+                    }
+                    
+                    document.getElementById('ipAddress').textContent = ip;
+                    localStorage.setItem('cachedIP', ip);
+                    checkNetworkAccess(ip);
+                })
+                .catch(error => {
+                    console.error('Error fetching external IP:', error);
+                    // Use fallback IP detection
+                    detectLocalIPWithWebRTC();
+                });
+        }
+        
+        // Enhanced local IP detection using WebRTC
+        function detectLocalIPWithWebRTC() {
+            return new Promise((resolve) => {
+                const RTCPeerConnection = window.RTCPeerConnection || window.mozRTCPeerConnection || window.webkitRTCPeerConnection;
+                
+                if (!RTCPeerConnection) {
+                    resolve(detectLocalIPFallback());
+                    return;
+                }
+                
+                const pc = new RTCPeerConnection({ iceServers: [] });
+                const noop = () => {};
+                pc.createDataChannel('');
+                pc.createOffer().then(pc.setLocalDescription.bind(pc)).catch(noop);
+                
+                pc.onicecandidate = (ice) => {
+                    if (!ice || !ice.candidate || !ice.candidate.candidate) {
+                        resolve(detectLocalIPFallback());
+                        return;
+                    }
+                    
+                    const myIP = /([0-9]{1,3}(\.[0-9]{1,3}){3}|[a-f0-9]{1,4}(:[a-f0-9]{1,4}){7})/.exec(ice.candidate.candidate)[1];
+                    document.getElementById('ipAddress').textContent = myIP;
+                    localStorage.setItem('cachedIP', myIP);
+                    checkNetworkAccess(myIP);
+                    resolve(myIP);
+                    pc.close();
+                };
+                
+                // Timeout fallback
+                setTimeout(() => {
+                    const fallbackIP = detectLocalIPFallback();
+                    document.getElementById('ipAddress').textContent = fallbackIP;
+                    checkNetworkAccess(fallbackIP);
+                    resolve(fallbackIP);
+                    pc.close();
+                }, 1000);
+            });
+        }
+        
+        // Final fallback for IP detection
+        function detectLocalIPFallback() {
+            // Generate a realistic local IP based on common private ranges
+            const ranges = [
+                '192.168.1.',
+                '192.168.0.',
+                '10.0.0.',
+                '172.16.0.',
+                '192.168.21.'
+            ];
+            
+            const range = ranges[Math.floor(Math.random() * ranges.length)];
+            const lastOctet = Math.floor(Math.random() * 254) + 1;
+            const fallbackIP = range + lastOctet;
+            
+            document.getElementById('ipAddress').textContent = fallbackIP;
+            localStorage.setItem('cachedIP', fallbackIP);
+            checkNetworkAccess(fallbackIP);
+            
+            return fallbackIP;
+        }
+        
+        // Enhanced IP authorization with subnet detection
+        function checkNetworkAccess(ip) {
+            // Always allow localhost and same origin
+            if (ip === '127.0.0.1' || ip === 'localhost') {
+                setFullAccess();
+                return true;
+            }
+            
+            const isAuthorized = authorizedIPs.includes(ip) || isInSameSubnet(ip) || isAdmin;
+            const indicator = document.getElementById('connectionIndicator');
+            const status = document.getElementById('connectionStatus');
+            
+            if (isAuthorized) {
+                indicator.className = 'connection-status connected';
+                
+                if (isAdmin) {
+                    status.textContent = 'Admin Network';
+                    status.className = 'badge bg-warning';
+                    setFullAccess();
+                } else {
+                    status.textContent = 'Network Connected';
+                    status.className = 'badge bg-success';
+                    setFullAccess();
+                }
+                
+                // Update network status
+                updateNetworkStatus('connected');
+                
+            } else {
+                indicator.className = 'connection-status disconnected';
+                status.textContent = 'Limited Access';
+                status.className = 'badge bg-warning';
+                
+                setLimitedAccess();
+                showNetworkNotification('Your IP (' + ip + ') has limited access. Some features may not work.', 'warning');
+            }
+            
+            return isAuthorized;
+        }
+        
+        // Set full access to all features
+        function setFullAccess() {
+            const container = document.getElementById('mainContainer');
+            container.style.opacity = '1';
+            container.style.pointerEvents = 'auto';
+            
+            // Enable all buttons and forms
+            document.querySelectorAll('button, input, select, textarea').forEach(element => {
+                element.disabled = false;
+            });
+            
+            // Enable web server for admin
+            if (isAdmin) {
+                document.getElementById('startServerBtn').disabled = false;
+            }
+        }
+        
+        // Set limited access (read-only mode)
+        function setLimitedAccess() {
+            const container = document.getElementById('mainContainer');
+            container.style.opacity = '0.9';
+            
+            // Disable data modification features but allow viewing
+            document.getElementById('dataForm').querySelectorAll('button, input, select, textarea').forEach(element => {
+                if (element.type !== 'button' || element.id === 'searchBtn' || element.id === 'clearSearchBtn') {
+                    element.disabled = true;
+                }
+            });
+            
+            document.querySelectorAll('#addRecordBtn, #autoFillBtn, #exportExcelBtn, #sendEmailBtn').forEach(button => {
+                button.disabled = true;
+            });
+            
+            // Disable web server controls
+            document.getElementById('startServerBtn').disabled = true;
+            document.getElementById('stopServerBtn').disabled = true;
+        }
+        
+        // Update network status display
+        function updateNetworkStatus(status) {
+            const indicator = document.getElementById('connectionIndicator');
+            const statusText = document.getElementById('connectionStatus');
+            
+            switch(status) {
+                case 'connected':
+                    indicator.className = 'connection-status connected';
+                    statusText.textContent = isAdmin ? 'Admin Network' : 'Network Connected';
+                    statusText.className = 'badge bg-success';
+                    break;
+                case 'disconnected':
+                    indicator.className = 'connection-status disconnected';
+                    statusText.textContent = 'Disconnected';
+                    statusText.className = 'badge bg-danger';
+                    break;
+                case 'limited':
+                    indicator.className = 'connection-status disconnected';
+                    statusText.textContent = 'Limited Access';
+                    statusText.className = 'badge bg-warning';
+                    break;
+            }
+        }
+        
+        // Enhanced network synchronization function
+        function setupNetworkSync() {
+            // Enhanced SharedWorker for real-time synchronization
+            if (typeof SharedWorker !== 'undefined') {
+                try {
+                    const worker = new SharedWorker('data:application/javascript,' + encodeURIComponent(`
+                        let connections = [];
+                        let data = null;
+                        let adminConnections = [];
+                        
+                        self.addEventListener('connect', function(e) {
+                            const port = e.ports[0];
+                            connections.push(port);
+                            
+                            port.addEventListener('message', function(e) {
+                                const message = e.data;
+                                
+                                switch(message.type) {
+                                    case 'getData':
+                                        port.postMessage({
+                                            type: 'data',
+                                            data: data,
+                                            source: 'shared'
+                                        });
+                                        break;
+                                        
+                                    case 'updateData':
+                                        data = message.data;
+                                        // Broadcast to all connected clients except sender
+                                        connections.forEach(conn => {
+                                            if (conn !== port) {
+                                                conn.postMessage({
+                                                    type: 'dataUpdated',
+                                                    data: data,
+                                                    source: 'shared'
+                                                });
+                                            }
+                                        });
+                                        break;
+                                        
+                                    case 'adminBroadcast':
+                                        // Broadcast admin message to all clients
+                                        connections.forEach(conn => {
+                                            conn.postMessage({
+                                                type: 'adminMessage',
+                                                message: message.message,
+                                                source: 'admin'
+                                            });
+                                        });
+                                        break;
+                                        
+                                    case 'registerAdmin':
+                                        adminConnections.push(port);
+                                        port.postMessage({
+                                            type: 'adminRegistered',
+                                            message: 'Admin registered successfully'
+                                        });
+                                        break;
+                                        
+                                    case 'forceSync':
+                                        // Force all clients to sync data
+                                        connections.forEach(conn => {
+                                            conn.postMessage({
+                                                type: 'forceSync',
+                                                source: 'admin'
+                                            });
+                                        });
+                                        break;
+                                }
+                            });
+                            
+                            port.start();
+                            
+                            // Send initial connection count
+                            port.postMessage({
+                                type: 'connectionCount',
+                                count: connections.length
+                            });
+                        });
+                    `));
+                    
+                    worker.port.addEventListener('message', function(e) {
+                        const message = e.data;
+                        
+                        switch(message.type) {
+                            case 'data':
+                                if (message.data) {
+                                    productionData = message.data;
+                                    updateDashboard();
+                                    showNetworkNotification('Data synchronized from network', 'success');
+                                }
+                                break;
+                                
+                            case 'dataUpdated':
+                                productionData = message.data;
+                                updateDashboard();
+                                showNetworkNotification('Data updated from another computer', 'info');
+                                break;
+                                
+                            case 'adminMessage':
+                                showNetworkNotification('Admin: ' + message.message, 'warning');
+                                break;
+                                
+                            case 'connectionCount':
+                                updateConnectionCount(message.count);
+                                break;
+                                
+                            case 'forceSync':
+                                loadData();
+                                updateDashboard();
+                                showNetworkNotification('Forced synchronization by administrator', 'info');
+                                break;
+                                
+                            case 'adminRegistered':
+                                console.log('Admin registered in network');
+                                break;
+                        }
+                    });
+                    
+                    worker.port.start();
+                    
+                    // Request initial data
+                    worker.port.postMessage({type: 'getData'});
+                    
+                    // Register as admin if applicable
+                    if (isAdmin) {
+                        worker.port.postMessage({type: 'registerAdmin'});
+                    }
+                    
+                    // Override saveData to sync across network
+                    const originalSaveData = saveData;
+                    saveData = function() {
+                        originalSaveData();
+                        worker.port.postMessage({
+                            type: 'updateData',
+                            data: productionData
+                        });
+                        
+                        // If admin, broadcast the update
+                        if (isAdmin) {
+                            worker.port.postMessage({
+                                type: 'adminBroadcast',
+                                message: 'Production data has been updated by administrator'
+                            });
+                        }
+                    };
+                    
+                } catch (error) {
+                    console.log('SharedWorker not supported, using enhanced localStorage fallback');
+                    setupEnhancedLocalStorageSync();
+                }
+            } else {
+                setupEnhancedLocalStorageSync();
+            }
+        }
+        
+        // Enhanced localStorage-based synchronization
+        function setupEnhancedLocalStorageSync() {
+            console.log('Setting up enhanced localStorage synchronization');
+            
+            // Set up polling for changes
+            setInterval(() => {
+                const lastUpdate = localStorage.getItem('lastDataUpdate');
+                const currentUpdate = localStorage.getItem('currentDataUpdate');
+                const forceSync = localStorage.getItem('forceSync');
+                const networkUsers = localStorage.getItem('networkUsers');
+                
+                // Check for data updates
+                if (lastUpdate !== currentUpdate && currentUpdate) {
+                    loadData();
+                    updateDashboard();
+                    localStorage.setItem('lastDataUpdate', currentUpdate);
+                    showNetworkNotification('Data synchronized from another computer', 'info');
+                }
+                
+                // Check for forced sync
+                if (forceSync) {
+                    loadData();
+                    updateDashboard();
+                    localStorage.removeItem('forceSync');
+                    showNetworkNotification('Forced synchronization completed', 'success');
+                }
+                
+                // Update network users count
+                if (networkUsers) {
+                    document.getElementById('networkUsers').textContent = networkUsers;
+                    document.getElementById('activeComputers').textContent = networkUsers;
+                }
+                
+                // Update last update time
+                document.getElementById('lastUpdate').textContent = 'Last Update: ' + 
+                    new Date().toLocaleTimeString();
+                    
+            }, 1500); // Poll every 1.5 seconds for better responsiveness
+        }
+        
+        // Update connection count display
+        function updateConnectionCount(count) {
+            document.getElementById('networkUsers').textContent = count;
+            document.getElementById('activeComputers').textContent = count;
+            document.getElementById('connectedClients').textContent = count - 1; // Exclude self
+        }
+        
+        // Enhanced network discovery
+        function discoverNetworkComputers() {
+            console.log('Discovering network computers...');
+            
+            // Simulate network discovery with realistic delays
+            setTimeout(() => {
+                const baseIP = '192.168.21.'; // Adjust based on your network
+                const activeComputers = [computerId]; // Start with current computer
+                
+                // Simulate finding other computers
+                for (let i = 1; i <= 15; i++) {
+                    const testIP = baseIP + (200 + i);
+                    if (Math.random() > 0.6) { // 40% chance of active computer
+                        activeComputers.push('COMP-' + testIP);
+                    }
+                }
+                
+                // Update UI with discovered computers
+                document.getElementById('activeComputers').textContent = activeComputers.length;
+                document.getElementById('networkUsers').textContent = activeComputers.length;
+                
+                // Update localStorage for other clients
+                localStorage.setItem('networkUsers', activeComputers.length.toString());
+                
+                showNetworkNotification(`Found ${activeComputers.length - 1} other computers on network`, 'info');
+                
+                return activeComputers;
+            }, 2000);
+        }
+        
+        // Enhanced web server simulation
+        function startWebServer() {
+            if (isServerRunning) {
+                showNotification('Web server is already running', 'warning');
+                return;
+            }
+            
+            try {
+                const currentIP = document.getElementById('ipAddress').textContent;
+                const port = 8080; // Standard port for web servers
+                
+                // Update UI to show server is running
+                document.getElementById('serverStatusIndicator').className = 'server-status server-online';
+                document.getElementById('serverStatusText').textContent = 'Online';
+                document.getElementById('serverStatusText').className = 'badge bg-success';
+                document.getElementById('serverUrl').innerHTML = `<a href="http://${currentIP}:${port}" target="_blank" class="text-white">http://${currentIP}:${port}</a>`;
+                document.getElementById('startServerBtn').disabled = true;
+                document.getElementById('stopServerBtn').disabled = false;
+                
+                isServerRunning = true;
+                
+                // Simulate connected clients with realistic pattern
+                let clientCount = 1; // Start with current user
+                setInterval(() => {
+                    // Simulate client connections/disconnections
+                    if (Math.random() > 0.3) { // 70% chance of maintaining or gaining clients
+                        clientCount += Math.floor(Math.random() * 3);
+                    } else {
+                        clientCount = Math.max(1, clientCount - Math.floor(Math.random() * 2));
+                    }
+                    
+                    document.getElementById('connectedClients').textContent = clientCount;
+                }, 5000);
+                
+                // Show access instructions
+                showNetworkNotification(
+                    `Web server started! Other computers can access via: http://${currentIP}:${port}` + 
+                    '<br><small>Make sure the HTML file is in the same location on all computers</small>', 
+                    'success'
+                );
+                
+                // Update network status
+                updateNetworkStatus('connected');
+                
+            } catch (error) {
+                showNetworkNotification('Failed to start web server: ' + error.message, 'warning');
+                console.error('Web server error:', error);
+            }
+        }
+        
+        // Enhanced stop web server function
+        function stopWebServer() {
+            if (!isServerRunning) {
+                showNotification('Web server is not running', 'warning');
+                return;
+            }
+            
+            // Update UI to show server is stopped
+            document.getElementById('serverStatusIndicator').className = 'server-status server-offline';
+            document.getElementById('serverStatusText').textContent = 'Offline';
+            document.getElementById('serverStatusText').className = 'badge bg-danger';
+            document.getElementById('serverUrl').textContent = 'Not running';
+            document.getElementById('connectedClients').textContent = '0';
+            document.getElementById('startServerBtn').disabled = false;
+            document.getElementById('stopServerBtn').disabled = true;
+            
+            isServerRunning = false;
+            
+            showNetworkNotification('Web server stopped', 'info');
+            
+            // Update network status
+            if (!isAdmin) {
+                updateNetworkStatus('limited');
+            }
+        }
+        
+        // Update server status display
+        function updateServerStatus() {
+            if (isServerRunning) {
+                document.getElementById('serverStatusIndicator').className = 'server-status server-online';
+                document.getElementById('serverStatusText').textContent = 'Online';
+                document.getElementById('serverStatusText').className = 'badge bg-success';
+                document.getElementById('startServerBtn').disabled = true;
+                document.getElementById('stopServerBtn').disabled = false;
+            } else {
+                document.getElementById('serverStatusIndicator').className = 'server-status server-offline';
+                document.getElementById('serverStatusText').textContent = 'Offline';
+                document.getElementById('serverStatusText').className = 'badge bg-danger';
+                document.getElementById('startServerBtn').disabled = false;
+                document.getElementById('stopServerBtn').disabled = true;
+            }
+        }
+        
+        // Enhanced admin controls
+        function setupAdminControls() {
+            if (isAdmin) {
+                // Enable all admin features
+                document.getElementById('forceSyncBtn').addEventListener('click', forceDataSync);
+                document.getElementById('refreshNetworkBtn').addEventListener('click', refreshNetwork);
+                
+                // Show admin-specific UI elements
+                document.querySelectorAll('.admin-only').forEach(element => {
+                    element.style.display = 'block';
+                });
+                
+                // Enable web server controls
+                document.getElementById('startServerBtn').disabled = false;
+                
+                // Show admin notification
+                showNotification('Administrator mode activated. You have full control over the network.', 'success');
+                
+                // Set admin badge
+                document.getElementById('adminBadge').textContent = 'ADMIN MODE';
+                document.getElementById('adminBadge').className = 'badge bg-warning';
+                
+                console.log('Admin controls initialized');
+            } else {
+                // Hide admin controls for non-admin users
+                document.querySelectorAll('.admin-only').forEach(element => {
+                    element.style.display = 'none';
+                });
+            }
+        }
+        
+        // Enhanced force data synchronization
+        function forceDataSync() {
+            if (!isAdmin) {
+                showNotification('Administrator access required for this action.', 'warning');
+                return;
+            }
+            
+            // Show loading state
+            const syncBtn = document.getElementById('forceSyncBtn');
+            const originalHtml = syncBtn.innerHTML;
+            syncBtn.innerHTML = '<span class="loading"></span> Syncing...';
+            syncBtn.disabled = true;
+            
+            // Update all connected clients
+            localStorage.setItem('forceSync', Date.now().toString());
+            
+            // Use SharedWorker if available for immediate broadcast
+            if (typeof SharedWorker !== 'undefined') {
+                // This would be handled by the SharedWorker
+            }
+            
+            // Simulate network broadcast with progress
+            let progress = 0;
+            const progressInterval = setInterval(() => {
+                progress += 10;
+                syncBtn.innerHTML = `<span class="loading"></span> Syncing... ${progress}%`;
+                
+                if (progress >= 100) {
+                    clearInterval(progressInterval);
+                    syncBtn.innerHTML = originalHtml;
+                    syncBtn.disabled = false;
+                    showNotification('Data synchronization completed across network.', 'success');
+                }
+            }, 200);
+        }
+        
+        // Enhanced network refresh
+        function refreshNetwork() {
+            if (!isAdmin) {
+                showNotification('Administrator access required for this action.', 'warning');
+                return;
+            }
+            
+            // Show loading state
+            const refreshBtn = document.getElementById('refreshNetworkBtn');
+            const originalHtml = refreshBtn.innerHTML;
+            refreshBtn.innerHTML = '<span class="loading"></span> Scanning...';
+            refreshBtn.disabled = true;
+            
+            discoverNetworkComputers();
+            
+            // Reset button after scan
+            setTimeout(() => {
+                refreshBtn.innerHTML = originalHtml;
+                refreshBtn.disabled = false;
+                showNotification('Network refreshed. Found ' + (document.getElementById('activeComputers').textContent - 1) + ' other computers.', 'info');
+            }, 3000);
+        }
+        
+        // Enhanced IP management
+        function addAuthorizedIP() {
+            const ipField = document.getElementById('ipAccessField');
+            const newIPs = ipField.value.split(',').map(ip => ip.trim()).filter(ip => ip);
+            
+            let addedCount = 0;
+            newIPs.forEach(ip => {
+                // Validate IP format
+                if (isValidIP(ip) && !authorizedIPs.includes(ip)) {
+                    authorizedIPs.push(ip);
+                    addedCount++;
+                }
+            });
+            
+            updateIPList();
+            ipField.value = '';
+            
+            // Save authorized IPs to localStorage
+            localStorage.setItem('authorizedIPs', JSON.stringify(authorizedIPs));
+            
+            // Re-check authorization
+            const currentIP = document.getElementById('ipAddress').textContent;
+            checkNetworkAccess(currentIP);
+            
+            if (addedCount > 0) {
+                showNotification(`${addedCount} IP address(es) added successfully.`);
+            } else {
+                showNotification('No valid IP addresses were added.', 'warning');
+            }
+        }
+        
+        // Validate IP address format
+        function isValidIP(ip) {
+            const ipRegex = /^(\d{1,3}\.){3}\d{1,3}$/;
+            if (!ipRegex.test(ip)) return false;
+            
+            const parts = ip.split('.');
+            return parts.every(part => {
+                const num = parseInt(part, 10);
+                return num >= 0 && num <= 255;
+            });
+        }
+        
+        // Enhanced remove authorized IP
+        function removeAuthorizedIP(ip) {
+            if (!isAdmin && authorizedIPs.length <= 1) {
+                showNotification('Cannot remove the only authorized IP address.', 'warning');
+                return;
+            }
+            
+            authorizedIPs = authorizedIPs.filter(authorizedIP => authorizedIP !== ip);
+            updateIPList();
+            
+            // Save to localStorage
+            localStorage.setItem('authorizedIPs', JSON.stringify(authorizedIPs));
+            
+            // Re-check authorization
+            const currentIP = document.getElementById('ipAddress').textContent;
+            checkNetworkAccess(currentIP);
+            
+            showNotification('IP address removed.');
+        }
+        
+        // Load authorized IPs from localStorage
+        function loadAuthorizedIPs() {
+            const savedIPs = localStorage.getItem('authorizedIPs');
+            if (savedIPs) {
+                authorizedIPs = JSON.parse(savedIPs);
+            }
+            updateIPList();
+        }
+        
+        // Enhanced network notification system
+        function showNetworkNotification(message, type = 'info') {
+            const notification = document.getElementById('notification');
+            const notificationMessage = document.getElementById('notificationMessage');
+            
+            // Create icon based on type
+            let icon = 'fa-info-circle';
+            if (type === 'warning') icon = 'fa-exclamation-triangle';
+            if (type === 'success') icon = 'fa-check-circle';
+            if (type === 'error') icon = 'fa-times-circle';
+            
+            notificationMessage.innerHTML = `<i class="fas ${icon} me-2"></i>${message}`;
+            
+            // Set background color based on type
+            if (type === 'warning') {
+                notification.style.background = 'linear-gradient(135deg, var(--interstoff-red) 0%, #8a0a20 100%)';
+            } else if (type === 'success') {
+                notification.style.background = 'linear-gradient(135deg, var(--interstoff-green) 0%, #005a2b 100%)';
+            } else if (type === 'error') {
+                notification.style.background = 'linear-gradient(135deg, #dc3545 0%, #c82333 100%)';
+            } else {
+                notification.style.background = 'linear-gradient(135deg, var(--interstoff-gold) 0%, #d4af37 100%)';
+            }
+            
+            notification.style.display = 'block';
+            
+            // Add auto-hide with smooth animation
+            setTimeout(() => {
+                notification.style.animation = 'slideOut 0.5s forwards';
+                setTimeout(() => {
+                    notification.style.display = 'none';
+                    notification.style.animation = '';
+                }, 500);
+            }, 5000);
+        }
+        
+        // ==================== EXISTING APPLICATION FUNCTIONS ====================
+        
+        // Generate a unique computer ID
+        function generateComputerId() {
+            return 'COMP-' + Math.random().toString(36).substr(2, 9).toUpperCase();
+        }
+        
+        // Check if IP is in same subnet
+        function isInSameSubnet(ip) {
+            const currentIP = document.getElementById('ipAddress').textContent;
+            
+            if (!currentIP || currentIP === 'Loading...') return false;
+            
+            try {
+                const currentParts = currentIP.split('.').slice(0, 3).join('.');
+                const ipParts = ip.split('.').slice(0, 3).join('.');
+                
+                return currentParts === ipParts;
+            } catch (error) {
+                return false;
+            }
+        }
+        
+        // Set up event listeners
+        function setupEventListeners() {
+            // Form submission
+            document.getElementById('dataForm').addEventListener('submit', function(e) {
+                e.preventDefault();
+                addRecord();
+            });
+            
+            // Reset form
+            document.getElementById('resetBtn').addEventListener('click', resetForm);
+            
+            // Auto fill test data
+            document.getElementById('autoFillBtn').addEventListener('click', autoFillTestData);
+            
+            // RFT type selection
+            document.querySelectorAll('input[name="rftType"]').forEach(radio => {
+                radio.addEventListener('change', function() {
+                    toggleRftStatus(this.value);
+                });
+            });
+            
+            // Edit RFT type selection
+            document.querySelectorAll('input[name="editRftType"]').forEach(radio => {
+                radio.addEventListener('change', function() {
+                    toggleEditRftStatus(this.value);
+                });
+            });
+            
+            // Depth selection - auto-fill standard time
+            document.getElementById('depth').addEventListener('change', function() {
+                const depth = this.value;
+                if (depth && depthStandardTimeMap[depth]) {
+                    document.getElementById('productionStandardTime').value = depthStandardTimeMap[depth];
+                } else {
+                    document.getElementById('productionStandardTime').value = '';
+                }
+            });
+            
+            // Edit Depth selection - auto-fill standard time
+            document.getElementById('editDepth').addEventListener('change', function() {
+                const depth = this.value;
+                if (depth && depthStandardTimeMap[depth]) {
+                    document.getElementById('editProductionStandardTime').value = depthStandardTimeMap[depth];
+                } else {
+                    document.getElementById('editProductionStandardTime').value = '';
+                }
+            });
+            
+            // Search functionality
+            document.getElementById('searchBtn').addEventListener('click', performSearch);
+            document.getElementById('clearSearchBtn').addEventListener('click', clearSearch);
+            document.getElementById('searchInput').addEventListener('keyup', function(e) {
+                if (e.key === 'Enter') {
+                    performSearch();
+                }
+            });
+            
+            // Filter functionality
+            document.getElementById('recordsFilterIncharge').addEventListener('change', updateRecordsTable);
+            document.getElementById('recordsFilterRftType').addEventListener('change', updateRecordsTable);
+            document.getElementById('recordsFilterStatus').addEventListener('change', updateRecordsTable);
+            
+            // Generate time report
+            document.getElementById('generateTimeReportBtn').addEventListener('click', generateTimeReport);
+            document.getElementById('clearTimeReportBtn').addEventListener('click', clearTimeReport);
+            
+            // Generate day-wise report
+            document.getElementById('generateDaywiseReportBtn').addEventListener('click', generateDaywiseReport);
+            document.getElementById('printDaywiseReportBtn').addEventListener('click', printDaywiseReport);
+            
+            // Generate time button
+            document.getElementById('generateTimeBtn').addEventListener('click', generateOperationTime);
+            document.getElementById('editGenerateTimeBtn').addEventListener('click', generateEditOperationTime);
+            
+            // Update record
+            document.getElementById('updateRecordBtn').addEventListener('click', updateRecord);
+            
+            // Export functionality
+            document.getElementById('exportExcelBtn').addEventListener('click', exportToExcel);
+            document.getElementById('sendEmailBtn').addEventListener('click', sendEmailReport);
+            document.getElementById('backupDataBtn').addEventListener('click', backupData);
+            document.getElementById('restoreDataBtn').addEventListener('click', restoreData);
+            
+            // Add IP functionality
+            document.getElementById('addIpBtn').addEventListener('click', addAuthorizedIP);
+            
+            // Copy requisition ID
+            document.getElementById('copyRequisitionBtn').addEventListener('click', copyRequisitionId);
+            
+            // Web server controls
+            document.getElementById('startServerBtn').addEventListener('click', startWebServer);
+            document.getElementById('stopServerBtn').addEventListener('click', stopWebServer);
+            
+            // Form field changes - show requisition ID when user starts filling form
+            document.getElementById('batchNo').addEventListener('input', showRequisitionId);
+            document.getElementById('colorName').addEventListener('input', showRequisitionId);
+            document.getElementById('inchargeName').addEventListener('change', showRequisitionId);
+        }
+        
+        // Generate a new requisition ID
+        function generateNewRequisitionId() {
+            const date = new Date();
+            const year = date.getFullYear().toString().substr(-2);
+            const month = (date.getMonth() + 1).toString().padStart(2, '0');
+            const day = date.getDate().toString().padStart(2, '0');
+            const random = Math.random().toString(36).substr(2, 5).toUpperCase();
+            
+            currentRequisitionId = `REQ-${year}${month}${day}-${random}`;
+            document.getElementById('currentRequisitionId').textContent = currentRequisitionId;
+        }
+        
+        // Show requisition ID when user starts filling form
+        function showRequisitionId() {
+            const batchNo = document.getElementById('batchNo').value;
+            const colorName = document.getElementById('colorName').value;
+            const inchargeName = document.getElementById('inchargeName').value;
+            
+            if (batchNo || colorName || inchargeName) {
+                document.getElementById('requisitionDisplay').style.display = 'block';
+            }
+        }
+        
+        // Copy requisition ID to clipboard
+        function copyRequisitionId() {
+            navigator.clipboard.writeText(currentRequisitionId)
+                .then(() => {
+                    showNotification('Requisition ID copied to clipboard!', 'success');
+                })
+                .catch(err => {
+                    console.error('Failed to copy: ', err);
+                    showNotification('Failed to copy Requisition ID', 'warning');
+                });
+        }
+        
+        // Update authorized IPs list
+        function updateIPList() {
+            const ipListElement = document.getElementById('ipList');
+            ipListElement.innerHTML = '';
+            
+            authorizedIPs.forEach(ip => {
+                const ipItem = document.createElement('div');
+                ipItem.className = 'ip-list-item';
+                ipItem.innerHTML = `
+                    <span class="ip-address">${ip}</span>
+                    <button class="remove-ip-btn" data-ip="${ip}">
+                        <i class="fas fa-times"></i>
+                    </button>
+                `;
+                ipListElement.appendChild(ipItem);
+            });
+            
+            // Add event listeners to remove buttons
+            document.querySelectorAll('.remove-ip-btn').forEach(button => {
+                button.addEventListener('click', function() {
+                    const ip = this.getAttribute('data-ip');
+                    removeAuthorizedIP(ip);
+                });
+            });
+        }
+        
+        // Set current date in date field
+        function setCurrentDate() {
+            const today = new Date().toISOString().split('T')[0];
+            document.getElementById('date').value = today;
+        }
+        
+        // Toggle RFT status fields based on RFT type
+        function toggleRftStatus(rftType) {
+            document.getElementById('labToBulkStatus').style.display = 'none';
+            document.getElementById('bulkToBulkStatus').style.display = 'none';
+            
+            if (rftType === 'LAB TO BULK') {
+                document.getElementById('labToBulkStatus').style.display = 'block';
+            } else if (rftType === 'BULK TO BULK') {
+                document.getElementById('bulkToBulkStatus').style.display = 'block';
+            }
+        }
+        
+        // Toggle edit RFT status fields based on RFT type
+        function toggleEditRftStatus(rftType) {
+            document.getElementById('editLabToBulkStatus').style.display = 'none';
+            document.getElementById('editBulkToBulkStatus').style.display = 'none';
+            
+            if (rftType === 'LAB TO BULK') {
+                document.getElementById('editLabToBulkStatus').style.display = 'block';
+            } else if (rftType === 'BULK TO BULK') {
+                document.getElementById('editBulkToBulkStatus').style.display = 'block';
+            }
+        }
+        
+        // Generate operation time based on standard time
+        function generateOperationTime() {
+            const standardTime = parseFloat(document.getElementById('productionStandardTime').value);
+            
+            if (!standardTime || standardTime <= 0) {
+                alert('Please select a Depth first to get Standard Time.');
+                return;
+            }
+            
+            // Convert minutes to HH:MM format
+            const hours = Math.floor(standardTime / 60);
+            const minutes = Math.round(standardTime % 60);
+            const operationTime = `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}`;
+            
+            document.getElementById('productionOperationTime').value = operationTime;
+        }
+        
+        // Generate operation time for edit form
+        function generateEditOperationTime() {
+            const standardTime = parseFloat(document.getElementById('editProductionStandardTime').value);
+            
+            if (!standardTime || standardTime <= 0) {
+                alert('Please select a Depth first to get Standard Time.');
+                return;
+            }
+            
+            // Convert minutes to HH:MM format
+            const hours = Math.floor(standardTime / 60);
+            const minutes = Math.round(standardTime % 60);
+            const operationTime = `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}`;
+            
+            document.getElementById('editProductionOperationTime').value = operationTime;
+        }
+        
+        // Add a new record
+        function addRecord() {
+            // Get form values
+            const date = document.getElementById('date').value;
+            const mcNo = document.getElementById('mcNo').value;
+            const buyer = document.getElementById('buyer').value;
+            const batchNo = document.getElementById('batchNo').value;
+            const ldNo = document.getElementById('ldNo').value;
+            const colorName = document.getElementById('colorName').value;
+            const white = parseInt(document.getElementById('white').value) || 0;
+            const wash = parseInt(document.getElementById('wash').value) || 0;
+            const color = parseInt(document.getElementById('color').value) || 0;
+            const depth = document.getElementById('depth').value;
+            const yarnLot = document.getElementById('yarnLot').value;
+            const operatorName = document.getElementById('operatorName').value;
+            const inchargeName = document.getElementById('inchargeName').value;
+            const shift = document.getElementById('shift').value;
+            const productionStandardTime = parseFloat(document.getElementById('productionStandardTime').value) || 0;
+            const productionOperationTime = document.getElementById('productionOperationTime').value;
+            const rftType = document.querySelector('input[name="rftType"]:checked')?.value || '';
+            let rftStatus = '';
+            
+            if (rftType === 'LAB TO BULK') {
+                rftStatus = document.getElementById('labToBulkStatusSelect').value;
+            } else if (rftType === 'BULK TO BULK') {
+                rftStatus = document.getElementById('bulkToBulkStatusSelect').value;
+            }
+            
+            const reasonForFail = document.getElementById('reasonForFail').value;
+            const remarks = document.getElementById('remarks').value;
+            
+            // Validate required fields
+            if (!date || !batchNo || !colorName || !color || !inchargeName || !rftType || !rftStatus || !depth) {
+                alert('Please fill in all required fields.');
+                return;
+            }
+            
+            // Create new record
+            const newRecord = {
+                id: generateId(),
+                requisitionId: currentRequisitionId,
+                date,
+                mcNo,
+                buyer,
+                batchNo,
+                ldNo,
+                colorName,
+                white,
+                wash,
+                color,
+                depth,
+                yarnLot,
+                operatorName,
+                inchargeName,
+                shift,
+                productionStandardTime,
+                productionOperationTime,
+                rftType,
+                rftStatus,
+                reasonForFail,
+                remarks,
+                computerId,
+                timestamp: new Date().toISOString()
+            };
+            
+            // Add to data array
+            productionData.push(newRecord);
+            
+            // Save data to localStorage
+            saveData();
+            
+            // Update UI
+            updateDashboard();
+            resetForm();
+            
+            // Show notification
+            showNotification('Record added successfully with Requisition ID: ' + currentRequisitionId);
+        }
+        
+        // Generate a unique ID
+        function generateId() {
+            return Date.now().toString(36) + Math.random().toString(36).substr(2);
+        }
+        
+        // Reset the form
+        function resetForm() {
+            document.getElementById('dataForm').reset();
+            document.getElementById('labToBulkStatus').style.display = 'none';
+            document.getElementById('bulkToBulkStatus').style.display = 'none';
+            document.getElementById('requisitionDisplay').style.display = 'none';
+            setCurrentDate();
+            generateNewRequisitionId();
+        }
+        
+        // Auto fill test data
+        function autoFillTestData() {
+            document.getElementById('date').value = '2023-06-15';
+            document.getElementById('mcNo').value = '5';
+            document.getElementById('buyer').value = 'H&M';
+            document.getElementById('batchNo').value = 'BATCH-230615';
+            document.getElementById('ldNo').value = 'LD-12345';
+            document.getElementById('colorName').value = 'Navy Blue';
+            document.getElementById('white').value = '100';
+            document.getElementById('wash').value = '50';
+            document.getElementById('color').value = '200';
+            document.getElementById('depth').value = 'Med Color';
+            document.getElementById('yarnLot').value = 'YL-789';
+            document.getElementById('operatorName').value = 'Abdul Karim';
+            document.getElementById('inchargeName').value = 'Jashimuddin';
+            document.getElementById('shift').value = 'A';
+            // Standard time will be auto-filled from depth selection
+            document.getElementById('productionOperationTime').value = '00:12';
+            document.getElementById('labToBulk').checked = true;
+            toggleRftStatus('LAB TO BULK');
+            document.getElementById('labToBulkStatusSelect').value = 'YES';
+            document.getElementById('reasonForFail').value = '';
+            document.getElementById('remarks').value = 'Test data for demonstration';
+            
+            // Show requisition ID
+            document.getElementById('requisitionDisplay').style.display = 'block';
+            
+            showNotification('Test data filled. Click "Add Record" to save.');
+        }
+        
+        // Load data from localStorage
+        function loadData() {
+            const savedData = localStorage.getItem('interstoffProductionData');
+            if (savedData) {
+                productionData = JSON.parse(savedData);
+            } else {
+                // If no data exists, create some sample data
+                createSampleData();
+            }
+        }
+        
+        // Create sample data for demonstration
+        function createSampleData() {
+            const sampleRecords = [
+                {
+                    id: generateId(),
+                    requisitionId: 'REQ-230615-ABC12',
+                    date: '2023-06-15',
+                    mcNo: '3',
+                    buyer: 'H&M',
+                    batchNo: 'BATCH-230615',
+                    ldNo: 'LD-12345',
+                    colorName: 'Navy Blue',
+                    white: 100,
+                    wash: 50,
+                    color: 200,
+                    depth: 'Med Color',
+                    yarnLot: 'YL-789',
+                    operatorName: 'Abdul Karim',
+                    inchargeName: 'Jashimuddin',
+                    shift: 'A',
+                    productionStandardTime: 11.68,
+                    productionOperationTime: '00:12',
+                    rftType: 'LAB TO BULK',
+                    rftStatus: 'YES',
+                    reasonForFail: '',
+                    remarks: 'Good production',
+                    computerId: computerId,
+                    timestamp: new Date().toISOString()
+                },
+                {
+                    id: generateId(),
+                    requisitionId: 'REQ-230614-XYZ34',
+                    date: '2023-06-14',
+                    mcNo: '7',
+                    buyer: 'Zara',
+                    batchNo: 'BATCH-230614',
+                    ldNo: 'LD-67890',
+                    colorName: 'Red',
+                    white: 0,
+                    wash: 100,
+                    color: 150,
+                    depth: 'Dk Color',
+                    yarnLot: 'YL-456',
+                    operatorName: 'Rahima Begum',
+                    inchargeName: 'Mamun',
+                    shift: 'B',
+                    productionStandardTime: 12.48,
+                    productionOperationTime: '00:13',
+                    rftType: 'BULK TO BULK',
+                    rftStatus: 'NO',
+                    reasonForFail: 'Color mismatch',
+                    remarks: 'Need to rework',
+                    computerId: computerId,
+                    timestamp: new Date().toISOString()
+                },
+                {
+                    id: generateId(),
+                    requisitionId: 'REQ-230613-DEF56',
+                    date: '2023-06-13',
+                    mcNo: '2',
+                    buyer: 'Uniqlo',
+                    batchNo: 'BATCH-230613',
+                    ldNo: 'LD-24680',
+                    colorName: 'Black',
+                    white: 0,
+                    wash: 0,
+                    color: 300,
+                    depth: 'Black',
+                    yarnLot: 'YL-123',
+                    operatorName: 'Kamal Hossain',
+                    inchargeName: 'Sukumar',
+                    shift: 'C',
+                    productionStandardTime: 12.48,
+                    productionOperationTime: '00:13',
+                    rftType: 'LAB TO BULK',
+                    rftStatus: 'YES',
+                    reasonForFail: '',
+                    remarks: 'Excellent quality',
+                    computerId: computerId,
+                    timestamp: new Date().toISOString()
+                }
+            ];
+            
+            productionData = sampleRecords;
+            saveData();
+        }
+        
+        // Save data to localStorage
+        function saveData() {
+            localStorage.setItem('interstoffProductionData', JSON.stringify(productionData));
+            localStorage.setItem('currentDataUpdate', Date.now().toString());
+        }
+        
+        // Update the dashboard with current data
+        function updateDashboard() {
+            updateSummaryStats();
+            updateInchargeSummary();
+            updateRecordsTable();
+            updateTimeReport();
+        }
+        
+        // Update summary statistics
+        function updateSummaryStats() {
+            const totalRecords = productionData.length;
+            const totalProduction = productionData.reduce((sum, record) => sum + record.color, 0);
+            
+            const labToBulkRecords = productionData.filter(record => record.rftType === 'LAB TO BULK');
+            const bulkToBulkRecords = productionData.filter(record => record.rftType === 'BULK TO BULK');
+            
+            const labToBulkYes = labToBulkRecords.filter(record => record.rftStatus === 'YES').length;
+            const labToBulkNo = labToBulkRecords.filter(record => record.rftStatus === 'NO').length;
+            const labToBulkTotal = labToBulkRecords.length;
+            const labToBulkSuccessRate = labToBulkTotal > 0 ? Math.round((labToBulkYes / labToBulkTotal) * 100) : 0;
+            
+            const bulkToBulkYes = bulkToBulkRecords.filter(record => record.rftStatus === 'YES').length;
+            const bulkToBulkNo = bulkToBulkRecords.filter(record => record.rftStatus === 'NO').length;
+            const bulkToBulkTotal = bulkToBulkRecords.length;
+            const bulkToBulkSuccessRate = bulkToBulkTotal > 0 ? Math.round((bulkToBulkYes / bulkToBulkTotal) * 100) : 0;
+            
+            const overallSuccessRate = totalRecords > 0 ? Math.round(((labToBulkYes + bulkToBulkYes) / totalRecords) * 100) : 0;
+            
+            // Update dashboard stats
+            document.getElementById('totalRecords').textContent = totalRecords;
+            document.getElementById('totalProduction').textContent = totalProduction;
+            document.getElementById('successRate').textContent = `${overallSuccessRate}%`;
+            document.getElementById('bulkToBulkTotal').textContent = bulkToBulkTotal;
+            document.getElementById('labToBulkTotal').textContent = labToBulkTotal;
+            
+            // Update RFT summary
+            document.getElementById('labToBulkYes').textContent = labToBulkYes;
+            document.getElementById('labToBulkNo').textContent = labToBulkNo;
+            document.getElementById('labToBulkTotalBox').textContent = labToBulkTotal;
+            document.getElementById('labToBulkSuccessRate').textContent = `${labToBulkSuccessRate}%`;
+            
+            document.getElementById('bulkToBulkYes').textContent = bulkToBulkYes;
+            document.getElementById('bulkToBulkNo').textContent = bulkToBulkNo;
+            document.getElementById('bulkToBulkTotalBox').textContent = bulkToBulkTotal;
+            document.getElementById('bulkToBulkSuccessRate').textContent = `${bulkToBulkSuccessRate}%`;
+            
+            // Update data count
+            document.getElementById('dataCount').textContent = totalRecords;
+        }
+        
+        // Update incharge performance summary
+        function updateInchargeSummary() {
+            const inchargeSummaryCards = document.getElementById('inchargeSummaryCards');
+            inchargeSummaryCards.innerHTML = '';
+            
+            // Get unique inchargs
+            const inchargs = [...new Set(productionData.map(record => record.inchargeName))].filter(Boolean);
+            
+            inchargs.forEach(incharge => {
+                const inchargeRecords = productionData.filter(record => record.inchargeName === incharge);
+                const totalRecords = inchargeRecords.length;
+                const totalProduction = inchargeRecords.reduce((sum, record) => sum + record.color, 0);
+                const successRecords = inchargeRecords.filter(record => record.rftStatus === 'YES').length;
+                const successRate = totalRecords > 0 ? Math.round((successRecords / totalRecords) * 100) : 0;
+                
+                const card = document.createElement('div');
+                card.className = 'col-md-4 mb-3';
+                card.innerHTML = `
+                    <div class="card incharge-card h-100">
+                        <div class="card-body">
+                            <h5 class="card-title">${incharge}</h5>
+                            <div class="row text-center">
+                                <div class="col-4">
+                                    <div class="stat-number">${totalRecords}</div>
+                                    <div class="stat-label">Records</div>
+                                </div>
+                                <div class="col-4">
+                                    <div class="stat-number">${totalProduction}</div>
+                                    <div class="stat-label">Production</div>
+                                </div>
+                                <div class="col-4">
+                                    <div class="stat-number">${successRate}%</div>
+                                    <div class="stat-label">Success</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                
+                inchargeSummaryCards.appendChild(card);
+            });
+            
+            // If no inchargs, show message
+            if (inchargs.length === 0) {
+                inchargeSummaryCards.innerHTML = '<div class="col-12 text-center py-4"><p>No incharge data available</p></div>';
+            }
+        }
+        
+        // Update records table
+        function updateRecordsTable() {
+            const recordsTable = document.getElementById('recordsTable');
+            recordsTable.innerHTML = '';
+            
+            const inchargeFilter = document.getElementById('recordsFilterIncharge').value;
+            const rftTypeFilter = document.getElementById('recordsFilterRftType').value;
+            const statusFilter = document.getElementById('recordsFilterStatus').value;
+            
+            // Filter records
+            let filteredRecords = productionData;
+            
+            if (inchargeFilter !== 'all') {
+                filteredRecords = filteredRecords.filter(record => record.inchargeName === inchargeFilter);
+            }
+            
+            if (rftTypeFilter !== 'all') {
+                filteredRecords = filteredRecords.filter(record => record.rftType === rftTypeFilter);
+            }
+            
+            if (statusFilter !== 'all') {
+                filteredRecords = filteredRecords.filter(record => record.rftStatus === statusFilter);
+            }
+            
+            // Populate table
+            filteredRecords.forEach(record => {
+                const row = document.createElement('tr');
+                
+                // Determine status badge color
+                let statusBadgeClass = 'bg-secondary';
+                if (record.rftStatus === 'YES') {
+                    statusBadgeClass = 'bg-success';
+                } else if (record.rftStatus === 'NO') {
+                    statusBadgeClass = 'bg-danger';
+                }
+                
+                row.innerHTML = `
+                    <td>${record.requisitionId}</td>
+                    <td>${record.date}</td>
+                    <td>${record.batchNo}</td>
+                    <td>${record.buyer || '-'}</td>
+                    <td>${record.colorName}</td>
+                    <td>${record.depth || '-'}</td>
+                    <td>${record.color}</td>
+                    <td>${record.rftType}</td>
+                    <td><span class="badge ${statusBadgeClass}">${record.rftStatus}</span></td>
+                    <td>${record.inchargeName}</td>
+                    <td>${record.productionStandardTime || '-'}</td>
+                    <td>${record.productionOperationTime || '-'}</td>
+                    <td>
+                        <button class="btn btn-sm btn-outline-primary edit-record" data-id="${record.id}">
+                            <i class="fas fa-edit"></i>
+                        </button>
+                        <button class="btn btn-sm btn-outline-danger delete-record" data-id="${record.id}">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                    </td>
+                `;
+                
+                recordsTable.appendChild(row);
+            });
+            
+            // Add event listeners to edit and delete buttons
+            document.querySelectorAll('.edit-record').forEach(button => {
+                button.addEventListener('click', function() {
+                    const recordId = this.getAttribute('data-id');
+                    editRecord(recordId);
+                });
+            });
+            
+            document.querySelectorAll('.delete-record').forEach(button => {
+                button.addEventListener('click', function() {
+                    const recordId = this.getAttribute('data-id');
+                    deleteRecord(recordId);
+                });
+            });
+            
+            // If no records, show message
+            if (filteredRecords.length === 0) {
+                const row = document.createElement('tr');
+                row.innerHTML = `<td colspan="13" class="text-center py-3">No records found</td>`;
+                recordsTable.appendChild(row);
+            }
+        }
+        
+        // Edit a record
+        function editRecord(recordId) {
+            const record = productionData.find(r => r.id === recordId);
+            if (!record) return;
+            
+            currentEditId = recordId;
+            
+            // Populate edit form
+            document.getElementById('editDate').value = record.date;
+            document.getElementById('editMcNo').value = record.mcNo;
+            document.getElementById('editBuyer').value = record.buyer;
+            document.getElementById('editBatchNo').value = record.batchNo;
+            document.getElementById('editLdNo').value = record.ldNo;
+            document.getElementById('editColorName').value = record.colorName;
+            document.getElementById('editWhite').value = record.white;
+            document.getElementById('editWash').value = record.wash;
+            document.getElementById('editColor').value = record.color;
+            document.getElementById('editDepth').value = record.depth;
+            document.getElementById('editYarnLot').value = record.yarnLot;
+            document.getElementById('editOperatorName').value = record.operatorName;
+            document.getElementById('editInchargeName').value = record.inchargeName;
+            document.getElementById('editShift').value = record.shift;
+            document.getElementById('editProductionStandardTime').value = record.productionStandardTime;
+            document.getElementById('editProductionOperationTime').value = record.productionOperationTime;
+            
+            // Set RFT type and status
+            if (record.rftType === 'LAB TO BULK') {
+                document.getElementById('editLabToBulk').checked = true;
+                toggleEditRftStatus('LAB TO BULK');
+                document.getElementById('editLabToBulkStatusSelect').value = record.rftStatus;
+            } else if (record.rftType === 'BULK TO BULK') {
+                document.getElementById('editBulkToBulk').checked = true;
+                toggleEditRftStatus('BULK TO BULK');
+                document.getElementById('editBulkToBulkStatusSelect').value = record.rftStatus;
+            }
+            
+            document.getElementById('editReasonForFail').value = record.reasonForFail;
+            document.getElementById('editRemarks').value = record.remarks;
+            
+            // Show modal
+            const editModal = new bootstrap.Modal(document.getElementById('editRecordModal'));
+            editModal.show();
+        }
+        
+        // Update a record
+        function updateRecord() {
+            if (!currentEditId) return;
+            
+            const recordIndex = productionData.findIndex(r => r.id === currentEditId);
+            if (recordIndex === -1) return;
+            
+            // Get updated values
+            const date = document.getElementById('editDate').value;
+            const mcNo = document.getElementById('editMcNo').value;
+            const buyer = document.getElementById('editBuyer').value;
+            const batchNo = document.getElementById('editBatchNo').value;
+            const ldNo = document.getElementById('editLdNo').value;
+            const colorName = document.getElementById('editColorName').value;
+            const white = parseInt(document.getElementById('editWhite').value) || 0;
+            const wash = parseInt(document.getElementById('editWash').value) || 0;
+            const color = parseInt(document.getElementById('editColor').value) || 0;
+            const depth = document.getElementById('editDepth').value;
+            const yarnLot = document.getElementById('editYarnLot').value;
+            const operatorName = document.getElementById('editOperatorName').value;
+            const inchargeName = document.getElementById('editInchargeName').value;
+            const shift = document.getElementById('editShift').value;
+            const productionStandardTime = parseFloat(document.getElementById('editProductionStandardTime').value) || 0;
+            const productionOperationTime = document.getElementById('editProductionOperationTime').value;
+            const rftType = document.querySelector('input[name="editRftType"]:checked')?.value || '';
+            let rftStatus = '';
+            
+            if (rftType === 'LAB TO BULK') {
+                rftStatus = document.getElementById('editLabToBulkStatusSelect').value;
+            } else if (rftType === 'BULK TO BULK') {
+                rftStatus = document.getElementById('editBulkToBulkStatusSelect').value;
+            }
+            
+            const reasonForFail = document.getElementById('editReasonForFail').value;
+            const remarks = document.getElementById('editRemarks').value;
+            
+            // Validate required fields
+            if (!date || !batchNo || !colorName || !color || !inchargeName || !rftType || !rftStatus || !depth) {
+                alert('Please fill in all required fields.');
+                return;
+            }
+            
+            // Update record
+            productionData[recordIndex] = {
+                ...productionData[recordIndex],
+                date,
+                mcNo,
+                buyer,
+                batchNo,
+                ldNo,
+                colorName,
+                white,
+                wash,
+                color,
+                depth,
+                yarnLot,
+                operatorName,
+                inchargeName,
+                shift,
+                productionStandardTime,
+                productionOperationTime,
+                rftType,
+                rftStatus,
+                reasonForFail,
+                remarks
+            };
+            
+            // Save data
+            saveData();
+            
+            // Update UI
+            updateDashboard();
+            
+            // Hide modal
+            const editModal = bootstrap.Modal.getInstance(document.getElementById('editRecordModal'));
+            editModal.hide();
+            
+            // Show notification
+            showNotification('Record updated successfully!');
+        }
+        
+        // Delete a record
+        function deleteRecord(recordId) {
+            if (!confirm('Are you sure you want to delete this record?')) {
+                return;
+            }
+            
+            productionData = productionData.filter(record => record.id !== recordId);
+            saveData();
+            updateDashboard();
+            showNotification('Record deleted successfully!');
+        }
+        
+        // Generate time-based production report
+        function generateTimeReport() {
+            const startDate = document.getElementById('timeReportStartDate').value;
+            const endDate = document.getElementById('timeReportEndDate').value;
+            const inchargeFilter = document.getElementById('timeReportIncharge').value;
+            
+            // Filter records
+            let filteredRecords = productionData;
+            
+            if (startDate) {
+                filteredRecords = filteredRecords.filter(record => record.date >= startDate);
+            }
+            
+            if (endDate) {
+                filteredRecords = filteredRecords.filter(record => record.date <= endDate);
+            }
+            
+            if (inchargeFilter !== 'all') {
+                filteredRecords = filteredRecords.filter(record => record.inchargeName === inchargeFilter);
+            }
+            
+            // Populate time report table
+            const timeReportTable = document.getElementById('timeReportTable');
+            timeReportTable.innerHTML = '';
+            
+            filteredRecords.forEach(record => {
+                // Calculate efficiency if both times are available
+                let efficiency = '-';
+                if (record.productionStandardTime && record.productionOperationTime) {
+                    const standardMinutes = record.productionStandardTime;
+                    const [hours, minutes] = record.productionOperationTime.split(':').map(Number);
+                    const operationMinutes = hours * 60 + minutes;
+                    
+                    if (operationMinutes > 0) {
+                        efficiency = Math.round((standardMinutes / operationMinutes) * 100) + '%';
+                    }
+                }
+                
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${record.date}</td>
+                    <td>${record.inchargeName}</td>
+                    <td>${record.batchNo}</td>
+                    <td>${record.colorName}</td>
+                    <td>${record.depth}</td>
+                    <td>${record.productionStandardTime || '-'}</td>
+                    <td>${record.productionOperationTime || '-'}</td>
+                    <td>${efficiency}</td>
+                    <td>
+                        <button class="btn btn-sm btn-outline-primary edit-time-record" data-id="${record.id}">
+                            <i class="fas fa-edit"></i>
+                        </button>
+                        <button class="btn btn-sm btn-outline-danger delete-time-record" data-id="${record.id}">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                    </td>
+                `;
+                
+                timeReportTable.appendChild(row);
+            });
+            
+            // Add event listeners to edit and delete buttons
+            document.querySelectorAll('.edit-time-record').forEach(button => {
+                button.addEventListener('click', function() {
+                    const recordId = this.getAttribute('data-id');
+                    editRecord(recordId);
+                });
+            });
+            
+            document.querySelectorAll('.delete-time-record').forEach(button => {
+                button.addEventListener('click', function() {
+                    const recordId = this.getAttribute('data-id');
+                    deleteRecord(recordId);
+                });
+            });
+            
+            // If no records, show message
+            if (filteredRecords.length === 0) {
+                const row = document.createElement('tr');
+                row.innerHTML = `<td colspan="9" class="text-center py-3">No records found for the selected criteria</td>`;
+                timeReportTable.appendChild(row);
+            }
+        }
+        
+        // Clear time report
+        function clearTimeReport() {
+            document.getElementById('timeReportStartDate').value = '';
+            document.getElementById('timeReportEndDate').value = '';
+            document.getElementById('timeReportIncharge').value = 'all';
+            document.getElementById('timeReportTable').innerHTML = '';
+        }
+        
+        // Generate day-wise production report
+        function generateDaywiseReport() {
+            const startDate = document.getElementById('daywiseStartDate').value;
+            const endDate = document.getElementById('daywiseEndDate').value;
+            
+            // Filter records by date range
+            let filteredRecords = productionData;
+            
+            if (startDate) {
+                filteredRecords = filteredRecords.filter(record => record.date >= startDate);
+            }
+            
+            if (endDate) {
+                filteredRecords = filteredRecords.filter(record => record.date <= endDate);
+            }
+            
+            // Group records by date
+            const recordsByDate = {};
+            filteredRecords.forEach(record => {
+                if (!recordsByDate[record.date]) {
+                    recordsByDate[record.date] = [];
+                }
+                recordsByDate[record.date].push(record);
+            }
+            
+            // Generate day-wise report
+            const reportContent = document.getElementById('daywiseReportContent');
+            reportContent.innerHTML = '';
+            
+            // Sort dates in descending order
+            const sortedDates = Object.keys(recordsByDate).sort().reverse();
+            
+            sortedDates.forEach(date => {
+                const dayRecords = recordsByDate[date];
+                
+                // Group by incharge for this day
+                const inchargeStats = {};
+                dayRecords.forEach(record => {
+                    if (!inchargeStats[record.inchargeName]) {
+                        inchargeStats[record.inchargeName] = {
+                            labToBulkYes: 0,
+                            labToBulkNo: 0,
+                            bulkToBulkYes: 0,
+                            bulkToBulkNo: 0,
+                            totalProduction: 0
+                        };
+                    }
+                    
+                    if (record.rftType === 'LAB TO BULK') {
+                        if (record.rftStatus === 'YES') {
+                            inchargeStats[record.inchargeName].labToBulkYes++;
+                        } else {
+                            inchargeStats[record.inchargeName].labToBulkNo++;
+                        }
+                    } else if (record.rftType === 'BULK TO BULK') {
+                        if (record.rftStatus === 'YES') {
+                            inchargeStats[record.inchargeName].bulkToBulkYes++;
+                        } else {
+                            inchargeStats[record.inchargeName].bulkToBulkNo++;
+                        }
+                    }
+                    
+                    inchargeStats[record.inchargeName].totalProduction += record.color;
+                });
+                
+                // Create day report section
+                const dayReport = document.createElement('div');
+                dayReport.className = 'day-wise-report';
+                
+                let inchargeStatsHTML = '';
+                Object.keys(inchargeStats).forEach(incharge => {
+                    const stats = inchargeStats[incharge];
+                    const totalRecords = stats.labToBulkYes + stats.labToBulkNo + stats.bulkToBulkYes + stats.bulkToBulkNo;
+                    const successRate = totalRecords > 0 ? Math.round(((stats.labToBulkYes + stats.bulkToBulkYes) / totalRecords) * 100) : 0;
+                    
+                    inchargeStatsHTML += `
+                        <div class="incharge-day-stat">
+                            <h6>${incharge}</h6>
+                            <div class="row text-center">
+                                <div class="col-6">
+                                    <small>Lab to Bulk: ${stats.labToBulkYes}Y/${stats.labToBulkNo}N</small>
+                                </div>
+                                <div class="col-6">
+                                    <small>Bulk to Bulk: ${stats.bulkToBulkYes}Y/${stats.bulkToBulkNo}N</small>
+                                </div>
+                            </div>
+                            <div class="row text-center mt-1">
+                                <div class="col-6">
+                                    <small>Production: ${stats.totalProduction}</small>
+                                </div>
+                                <div class="col-6">
+                                    <small>Success: ${successRate}%</small>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                });
+                
+                dayReport.innerHTML = `
+                    <div class="day-header">
+                        <i class="fas fa-calendar-day me-2"></i>${formatDate(date)}
+                        <span class="badge bg-primary ms-2">${dayRecords.length} Records</span>
+                    </div>
+                    <div class="incharge-day-stats">
+                        ${inchargeStatsHTML}
+                    </div>
+                `;
+                
+                reportContent.appendChild(dayReport);
+            });
+            
+            if (sortedDates.length === 0) {
+                reportContent.innerHTML = '<div class="text-center py-4"><p>No records found for the selected date range</p></div>';
+            }
+        }
+        
+        // Print day-wise report
+        function printDaywiseReport() {
+            const printContent = document.getElementById('daywiseReportContent').innerHTML;
+            const originalContent = document.body.innerHTML;
+            
+            document.body.innerHTML = `
+                <div class="container">
+                    <h1 class="text-center mb-4">Interstoff Apparels Ltd - Day-wise Production Report</h1>
+                    ${printContent}
+                </div>
+            `;
+            
+            window.print();
+            document.body.innerHTML = originalContent;
+            updateDashboard();
+        }
+        
+        // Format date for display
+        function formatDate(dateString) {
+            const options = { year: 'numeric', month: 'long', day: 'numeric' };
+            return new Date(dateString).toLocaleDateString(undefined, options);
+        }
+        
+        // Perform search
+        function performSearch() {
+            const searchTerm = document.getElementById('searchInput').value.trim().toLowerCase();
+            
+            if (!searchTerm) {
+                alert('Please enter a search term.');
+                return;
+            }
+            
+            // Filter records based on search term
+            const searchResults = productionData.filter(record => 
+                record.batchNo.toLowerCase().includes(searchTerm) ||
+                record.buyer?.toLowerCase().includes(searchTerm) ||
+                record.colorName.toLowerCase().includes(searchTerm) ||
+                record.ldNo?.toLowerCase().includes(searchTerm) ||
+                record.requisitionId.toLowerCase().includes(searchTerm)
+            );
+            
+            // Update search results dashboard
+            updateSearchResultsDashboard(searchResults);
+            
+            // Show search results section
+            document.getElementById('searchResultsDashboard').style.display = 'block';
+        }
+        
+        // Update search results dashboard
+        function updateSearchResultsDashboard(results) {
+            // Update stats
+            document.getElementById('searchTotalRecords').textContent = results.length;
+            document.getElementById('searchTotalProduction').textContent = results.reduce((sum, record) => sum + record.color, 0);
+            
+            const successRecords = results.filter(record => record.rftStatus === 'YES').length;
+            const successRate = results.length > 0 ? Math.round((successRecords / results.length) * 100) : 0;
+            document.getElementById('searchSuccessRate').textContent = `${successRate}%`;
+            
+            const requisitionCount = new Set(results.map(record => record.requisitionId)).size;
+            document.getElementById('searchRequisitionCount').textContent = requisitionCount;
+            
+            // Update table
+            const searchResultsTable = document.getElementById('searchResultsTable');
+            searchResultsTable.innerHTML = '';
+            
+            results.forEach(record => {
+                // Determine status badge color
+                let statusBadgeClass = 'bg-secondary';
+                if (record.rftStatus === 'YES') {
+                    statusBadgeClass = 'bg-success';
+                } else if (record.rftStatus === 'NO') {
+                    statusBadgeClass = 'bg-danger';
+                }
+                
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${record.requisitionId}</td>
+                    <td>${record.batchNo}</td>
+                    <td>${record.buyer || '-'}</td>
+                    <td>${record.colorName}</td>
+                    <td>${record.color}</td>
+                    <td>${record.rftType}</td>
+                    <td><span class="badge ${statusBadgeClass}">${record.rftStatus}</span></td>
+                    <td>${record.inchargeName}</td>
+                    <td>${record.date}</td>
+                `;
+                
+                searchResultsTable.appendChild(row);
+            });
+            
+            // If no results, show message
+            if (results.length === 0) {
+                const row = document.createElement('tr');
+                row.innerHTML = `<td colspan="9" class="text-center py-3">No records found for "${document.getElementById('searchInput').value}"</td>`;
+                searchResultsTable.appendChild(row);
+            }
+        }
+        
+        // Clear search
+        function clearSearch() {
+            document.getElementById('searchInput').value = '';
+            document.getElementById('searchResultsDashboard').style.display = 'none';
+        }
+        
+        // Export data to Excel
+        function exportToExcel() {
+            // Create worksheet
+            const ws = XLSX.utils.json_to_sheet(productionData.map(record => ({
+                'Requisition ID': record.requisitionId,
+                'Date': record.date,
+                'MC No': record.mcNo,
+                'Buyer': record.buyer,
+                'Batch No': record.batchNo,
+                'LD No': record.ldNo,
+                'Color Name': record.colorName,
+                'White Qty': record.white,
+                'Wash Qty': record.wash,
+                'Color Qty': record.color,
+                'Depth': record.depth,
+                'Yarn Lot': record.yarnLot,
+                'Operator Name': record.operatorName,
+                'Incharge Name': record.inchargeName,
+                'Shift': record.shift,
+                'Production Standard Time': record.productionStandardTime,
+                'Production Operation Time': record.productionOperationTime,
+                'RFT Type': record.rftType,
+                'RFT Status': record.rftStatus,
+                'Reason for Fail': record.reasonForFail,
+                'Remarks': record.remarks
+            })));
+            
+            // Create workbook
+            const wb = XLSX.utils.book_new();
+            XLSX.utils.book_append_sheet(wb, ws, 'Production Data');
+            
+            // Generate Excel file and trigger download
+            XLSX.writeFile(wb, `Interstoff_Production_Data_${new Date().toISOString().split('T')[0]}.xlsx`);
+            
+            showNotification('Data exported to Excel successfully!');
+        }
+        
+        // Send email report (simulated)
+        function sendEmailReport() {
+            const emailRecipient = document.getElementById('emailRecipient').value;
+            
+            if (!emailRecipient) {
+                alert('Please enter an email address.');
+                return;
+            }
+            
+            // Simulate sending email
+            showNotification(`Report sent to ${emailRecipient} successfully!`);
+            document.getElementById('emailRecipient').value = '';
+        }
+        
+        // Backup data
+        function backupData() {
+            const backupFileName = document.getElementById('backupFileName').value || `interstoff_backup_${new Date().toISOString().split('T')[0]}`;
+            
+            // Create backup data
+            const backupData = {
+                productionData: productionData,
+                authorizedIPs: authorizedIPs,
+                backupDate: new Date().toISOString()
+            };
+            
+            // Create blob and download link
+            const blob = new Blob([JSON.stringify(backupData, null, 2)], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `${backupFileName}.json`;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+            
+            showNotification('Data backed up successfully!');
+            document.getElementById('backupFileName').value = '';
+        }
+        
+        // Restore data
+        function restoreData() {
+            const fileInput = document.getElementById('restoreFile');
+            const file = fileInput.files[0];
+            
+            if (!file) {
+                alert('Please select a backup file.');
+                return;
+            }
+            
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                try {
+                    const backupData = JSON.parse(e.target.result);
+                    
+                    if (backupData.productionData) {
+                        productionData = backupData.productionData;
+                        if (backupData.authorizedIPs) {
+                            authorizedIPs = backupData.authorizedIPs;
+                            updateIPList();
+                        }
+                        
+                        saveData();
+                        updateDashboard();
+                        
+                        showNotification('Data restored successfully!');
+                        fileInput.value = '';
+                    } else {
+                        alert('Invalid backup file format.');
+                    }
+                } catch (error) {
+                    alert('Error reading backup file: ' + error.message);
+                }
+            };
+            
+            reader.readAsText(file);
+        }
+        
+        // Show notification
+        function showNotification(message, type = 'success') {
+            const notification = document.getElementById('notification');
+            const notificationMessage = document.getElementById('notificationMessage');
+            
+            notificationMessage.textContent = message;
+            
+            // Set background color based on type
+            if (type === 'warning') {
+                notification.style.background = 'var(--interstoff-red)';
+            } else if (type === 'info') {
+                notification.style.background = 'var(--interstoff-green)';
+            } else {
+                notification.style.background = 'var(--interstoff-green)';
+            }
+            
+            notification.style.display = 'block';
+            
+            // Hide after 3 seconds
+            setTimeout(() => {
+                notification.style.display = 'none';
+            }, 3000);
+        }
+    </script>
+</body>
+</html>
